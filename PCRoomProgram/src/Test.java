@@ -5,6 +5,7 @@ public class Test {
 		// TODO Auto-generated method stub
 
 		System.out.println("TEST");
+<<<<<<< HEAD
 		System.out.println("Test");
 		System.out.println("Test");
 		System.out.println("Test");
@@ -18,6 +19,9 @@ public class Test {
 		System.out.println("Test");
 		
 		
+=======
+		System.out.println("TEST");
+>>>>>>> refs/remotes/origin/master
 	}
 
 }
