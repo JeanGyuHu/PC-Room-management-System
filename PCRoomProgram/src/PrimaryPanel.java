@@ -12,7 +12,6 @@ public class PrimaryPanel extends JPanel {
 	private JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
 	private TopButtonListener btnL;
-
 	
 	private PcMemberPanel memberPanel;
 	
@@ -195,7 +194,7 @@ public class PrimaryPanel extends JPanel {
 				
 			} else if(obj == btnLogout) {
 				
-				int result = JOptionPane.showConfirmDialog(rightPanel, "종료하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
+				int result = JOptionPane.showConfirmDialog(topPanel, "종료하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
 				
 				if(result == JOptionPane.YES_OPTION) {
 					System.exit(1);
