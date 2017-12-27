@@ -12,9 +12,12 @@ public class PrimaryPanel extends JPanel {
 	private JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
 	private TopButtonListener btnL;
+
 	
 	private PcMemberPanel memberPanel;
 	
+	private PCPanel pcPanel;
+
 	public PrimaryPanel(){
 		
 		setPreferredSize(new Dimension(810,510));
@@ -124,6 +127,9 @@ public class PrimaryPanel extends JPanel {
 		memberPanel.setVisible(false);
 		leftPanel.add(memberPanel);
 		
+		pcPanel = new PCPanel();
+		pcPanel.setVisible(true);
+		leftPanel.add(pcPanel);
 		
 		image = new ImageIcon[4];
 		
@@ -159,31 +165,28 @@ public class PrimaryPanel extends JPanel {
 		btnLogout.setContentAreaFilled(false);
 		btnLogout.setFocusPainted(false);
 		btnLogout.addActionListener(btnL);
-		topPanel.add(btnLogout);
-		
-		
+		topPanel.add(btnLogout);		
 	}
+	
 	private class TopButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			Object obj = event.getSource();
 			
-			/*rightPanel.setVisible(false);
-			modifyPanel.setVisible(false);
-			showInformationPanel.setVisible(false);
-			messagePanel.setVisible(false);
-			*/
 			if(obj == btnMember) {
 				rightPanel.setVisible(true);
 				modifyPanel.setVisible(true);
 				showInformationPanel.setVisible(false);
 				messagePanel.setVisible(false);
 				memberPanel.setVisible(true);
+				pcPanel.setVisible(false);
 				
 			} else if(obj == btnSeat) {
 				rightPanel.setVisible(true);
 				modifyPanel.setVisible(false);
 				showInformationPanel.setVisible(true);
 				messagePanel.setVisible(false);
+				memberPanel.setVisible(false);
+				pcPanel.setVisible(true);
 				
 			} else if(obj == btnMessage) {
 				rightPanel.setVisible(false);
