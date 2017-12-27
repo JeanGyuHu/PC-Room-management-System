@@ -119,7 +119,6 @@ public class PrimaryPanel extends JPanel {
 		
 		image = new ImageIcon[4];
 		
-		
 		image[0] = new ImageIcon("Images/사용자 설정.png");
 		image[1] = new ImageIcon("Images/PC 관리.png");
 		image[2] = new ImageIcon("Images/메세지.png");
@@ -159,11 +158,6 @@ public class PrimaryPanel extends JPanel {
 		public void actionPerformed(ActionEvent event) {
 			Object obj = event.getSource();
 			
-			/*rightPanel.setVisible(false);
-			modifyPanel.setVisible(false);
-			showInformationPanel.setVisible(false);
-			messagePanel.setVisible(false);
-			*/
 			if(obj == btnMember) {
 				rightPanel.setVisible(true);
 				modifyPanel.setVisible(true);
