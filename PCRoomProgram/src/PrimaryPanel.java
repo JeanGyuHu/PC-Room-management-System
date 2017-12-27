@@ -13,6 +13,8 @@ public class PrimaryPanel extends JPanel {
 	private Font fnt;
 	private TopButtonListener btnL;
 	
+	private PcMemberPanel memberPanel;
+	
 	public PrimaryPanel(){
 		
 		setPreferredSize(new Dimension(810,510));
@@ -117,6 +119,12 @@ public class PrimaryPanel extends JPanel {
 		leftPanel.setBackground(Color.white);
 		add(leftPanel);
 		
+		memberPanel = new PcMemberPanel();
+		memberPanel.setBounds(0, 0, 500, 400);
+		memberPanel.setVisible(false);
+		leftPanel.add(memberPanel);
+		
+		
 		image = new ImageIcon[4];
 		
 		
@@ -169,6 +177,7 @@ public class PrimaryPanel extends JPanel {
 				modifyPanel.setVisible(true);
 				showInformationPanel.setVisible(false);
 				messagePanel.setVisible(false);
+				memberPanel.setVisible(true);
 				
 			} else if(obj == btnSeat) {
 				rightPanel.setVisible(true);
