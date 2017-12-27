@@ -12,7 +12,7 @@ public class PrimaryPanel extends JPanel {
 	private JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
 	private TopButtonListener btnL;
-	
+	private PCPanel pcPanel;
 	public PrimaryPanel(){
 		
 		setPreferredSize(new Dimension(810,510));
@@ -153,17 +153,15 @@ public class PrimaryPanel extends JPanel {
 		btnLogout.addActionListener(btnL);
 		topPanel.add(btnLogout);
 		
+		pcPanel = new PCPanel();
+		leftPanel.add(pcPanel);
+		
 		
 	}
 	private class TopButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			Object obj = event.getSource();
 			
-			/*rightPanel.setVisible(false);
-			modifyPanel.setVisible(false);
-			showInformationPanel.setVisible(false);
-			messagePanel.setVisible(false);
-			*/
 			if(obj == btnMember) {
 				rightPanel.setVisible(true);
 				modifyPanel.setVisible(true);
