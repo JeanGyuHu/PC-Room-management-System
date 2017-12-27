@@ -1,4 +1,7 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -13,10 +16,13 @@ public class PCPanel extends JPanel{
 	public static final int ID = 1;
 	public static final int MESSAGE = 2;
 	
+	private AcListener acListener;
 	public PCPanel() {
 		setPreferredSize(new Dimension(500, 400));
 	    setLayout(null);
 	    setBackground(Color.white);
+	    
+	    acListener = new AcListener();
 	    
 	    lblCounter = new JLabel("COUNTER");
 	    lblCounter.setBounds(340, 10, 140, 40);
@@ -48,6 +54,7 @@ public class PCPanel extends JPanel{
 	    	btnPC[i] = new JButton();
 	    	btnPC[i].setLayout(new GridLayout(3,1));
 	    	btnPC[i].setBackground(Color.white);
+	    	btnPC[i].addActionListener(acListener);
 	    	if(i%6 == 0 || i%6 == 1) col1.add(btnPC[i]);
 	    	else if(i%6 == 2 || i%6 == 3) col2.add(btnPC[i]);
 	    	else if(i%6 == 4 || i%6 == 5) col3.add(btnPC[i]);
@@ -63,14 +70,24 @@ public class PCPanel extends JPanel{
 		    	btnPC[i].add(lblPC[i][j]);
 	    	}
 	    }
-	    
+	    /*
 	    lblPC[20][TIME].setText("1");
 	    lblPC[20][ID].setText("ssyaoao");
 	    lblPC[20][MESSAGE].setText("YES");
-	    
-	    
-	    
+	    */
 	    
 	} // PCPanel()
+	
+	private class AcListener implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
+			Object obj = event.getSource();
+			
+			for(int i=0;i<24;i++) {
+				if(obj == btnPC[i]) {
+					
+				}
+			}
+		}
+	}
 
 } // class
