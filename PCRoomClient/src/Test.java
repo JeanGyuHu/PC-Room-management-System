@@ -8,7 +8,8 @@ public class Test {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		
-		
+		LoginPanel a = new LoginPanel();
+		frame.getContentPane().add(a);
 		
 		frame.pack();
 		frame.setVisible(true);

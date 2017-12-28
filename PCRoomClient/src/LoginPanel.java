@@ -14,7 +14,7 @@ public class LoginPanel extends JPanel{
 		setPreferredSize(new Dimension(500, 300));
 	    setLayout(null);
 	    setBackground(Color.white);
-	    
+
 	    lblID = new JLabel("ID ");
 	    lblID.setBounds(50, 25, 100, 70);
 	    lblID.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,7 +42,7 @@ public class LoginPanel extends JPanel{
 	    btnLogin.setBounds(280, 200, 150, 50);
 	    btnLogin.setBackground(Color.white);
 	    add(btnLogin);
-	    
+	   
 	}
 	
 	private class AcListener implements ActionListener{
@@ -56,6 +56,7 @@ public class LoginPanel extends JPanel{
 			}
 			else if(obj == btnLogin) {
 				// 로그인일때
+			
 			}
 			
 		}
