@@ -4,13 +4,13 @@ import javax.swing.*;
 
 public class ClientLoginPanel extends JPanel{
 	private JLabel lblID, lblPass;
-	private JTextField txtID, txtPass;
-	private JButton btnInsert, btnLogin;
+	protected JTextField txtID, txtPass;
+	protected JButton btnInsert, btnLogin;
 	private ClientMakeUser makeUser;
-	private ClientUserStatus userStatus;
 	private AcListener aL;
-	private ShowPanel show;
-	public ClientLoginPanel(ShowPanel s) {
+	private ClientShowPanel show;
+	
+	public ClientLoginPanel(ClientShowPanel s) {
 		
 		show = s;
 		
@@ -52,8 +52,7 @@ public class ClientLoginPanel extends JPanel{
 	    btnLogin.addActionListener(aL);
 	    add(btnLogin);
 	   
-	    userStatus = new ClientUserStatus();
-	    
+	   
 	}
 	
 	private class AcListener implements ActionListener{

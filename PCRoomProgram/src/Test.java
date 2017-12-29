@@ -10,7 +10,6 @@ public class Test {
 		frame.setResizable(false);
 		
 		PrimaryPanel primary = new PrimaryPanel();
-		
 		frame.getContentPane().add(primary);
 		
 		frame.pack();

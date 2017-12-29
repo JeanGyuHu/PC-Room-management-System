@@ -5,8 +5,8 @@ import java.awt.*;
 public class ClientUserStatus extends JPanel {
 	
 	private JLabel lblUserId, lblUserRemainTime;
-	private JTextField txtUserId, txtUserRemainTime;
-	private JButton btnMessage, btnLogout;
+	protected JTextField txtUserId, txtUserRemainTime;
+	protected JButton btnMessage, btnLogout;
 	private Font fnt;
 	
 	public ClientUserStatus() {
