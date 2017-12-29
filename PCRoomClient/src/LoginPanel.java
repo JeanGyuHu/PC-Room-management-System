@@ -9,11 +9,15 @@ public class LoginPanel extends JPanel{
 	private JLabel lblID, lblPass;
 	private JTextField txtID, txtPass;
 	private JButton btnInsert, btnLogin;
+	private MakeUser makeUser;
+	private AcListener aL;
 	
 	public LoginPanel() {
 		setPreferredSize(new Dimension(500, 300));
 	    setLayout(null);
 	    setBackground(Color.white);
+	    
+	    aL = new AcListener();
 	    
 	    lblID = new JLabel("ID ");
 	    lblID.setBounds(50, 25, 100, 70);
@@ -36,11 +40,15 @@ public class LoginPanel extends JPanel{
 	    btnInsert = new JButton("회원가입");
 	    btnInsert.setBounds(70, 200, 150, 50);
 	    btnInsert.setBackground(Color.white);
+	    btnInsert.addActionListener(aL);
 	    add(btnInsert);
+	    
+	    makeUser = new MakeUser();
 	    
 	    btnLogin = new JButton("로그인");
 	    btnLogin.setBounds(280, 200, 150, 50);
 	    btnLogin.setBackground(Color.white);
+	    
 	    add(btnLogin);
 	    
 	}
@@ -53,6 +61,7 @@ public class LoginPanel extends JPanel{
 			
 			if(obj == btnInsert) {
 				//회원가입 일때
+				makeUser.show();
 			}
 			else if(obj == btnLogin) {
 				// 로그인일때
