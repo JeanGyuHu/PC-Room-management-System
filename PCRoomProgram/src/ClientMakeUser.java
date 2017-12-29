@@ -5,8 +5,8 @@ import java.awt.event.*;
 public class ClientMakeUser extends JDialog {
 	
 	private JLabel lblTitle,lblName,lblId,lblPassword,lblPasswordCheck,lblBirth;
-	private JTextField[] txt;
-	private JButton btnOk,btnCancel;
+	protected JTextField[] txt;
+	protected JButton btnOk,btnCancel;
 	
 	public ClientMakeUser() {
 		

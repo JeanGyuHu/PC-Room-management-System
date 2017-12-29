@@ -5,13 +5,12 @@ import java.awt.event.*;
 public class PrimaryPanel extends JPanel {
 
 	private JPanel topPanel,leftPanel,rightPanel,modifyPanel,showInformationPanel,messagePanel;
-	private JButton btnMember,btnSeat, btnMessage, btnLogout;
+	protected JButton btnMember,btnSeat, btnMessage, btnLogout;
 	private ImageIcon[] image;
 	private JLabel lblId,lblName,lblPassword,lblBirth,lblTime;
-	private JTextField[] txtInfo;
-	private JButton btnModify,btnDelete,btnCharge,btnPowerOff;
+	protected JTextField[] txtInfo;
+	protected JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
-	private TopButtonListener btnL;
 	
 	private PcMemberPanel memberPanel;
 	
@@ -24,7 +23,6 @@ public class PrimaryPanel extends JPanel {
 		setLayout(null);
 		
 		fnt = new Font("¾ß³îÀÚ ¾ßÃ¼ R",Font.BOLD,20);
-		btnL = new TopButtonListener();
 		
 		topPanel = new JPanel();
 		topPanel.setBounds(0,0,810,100);
@@ -141,31 +139,35 @@ public class PrimaryPanel extends JPanel {
 		btnMember.setBorderPainted(false);
 		btnMember.setContentAreaFilled(false);
 		btnMember.setFocusPainted(false);
-		btnMember.addActionListener(btnL);
 		topPanel.add(btnMember);
 		
 		btnSeat = new JButton(image[1]);
 		btnSeat.setBorderPainted(false);
 		btnSeat.setContentAreaFilled(false);
 		btnSeat.setFocusPainted(false);
-		btnSeat.addActionListener(btnL);
 		topPanel.add(btnSeat);
 		
 		btnMessage = new JButton(image[2]);
 		btnMessage.setBorderPainted(false);
 		btnMessage.setContentAreaFilled(false);
 		btnMessage.setFocusPainted(false);
-		btnMessage.addActionListener(btnL);
 		topPanel.add(btnMessage);
 		
 		btnLogout = new JButton(image[3]);
 		btnLogout.setBorderPainted(false);
 		btnLogout.setContentAreaFilled(false);
 		btnLogout.setFocusPainted(false);
-		btnLogout.addActionListener(btnL);
 		topPanel.add(btnLogout);		
 	}
 	
+	public void addButtonActionListener(ActionListener listener) {
+		btnMember.addActionListener(listener);
+		btnSeat.addActionListener(listener);
+		btnMessage.addActionListener(listener);
+		btnLogout.addActionListener(listener);
+	}
+	/*
+	 
 	private class TopButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			Object obj = event.getSource();
@@ -203,5 +205,6 @@ public class PrimaryPanel extends JPanel {
 				}
 			}
 		}
-	}
+	}*/
+	
 }

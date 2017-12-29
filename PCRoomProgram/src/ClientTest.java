@@ -7,7 +7,7 @@ public class ClientTest {
 		JFrame frame = new JFrame("클라이언트 v.0310");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		ShowPanel showPanel = new ShowPanel();
+		ClientShowPanel showPanel = new ClientShowPanel();
 		frame.getContentPane().add(showPanel);
 		
 		frame.pack();

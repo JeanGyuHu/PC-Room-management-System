@@ -1,12 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class ShowPanel extends JPanel {
+public class ClientShowPanel extends JPanel {
 
 	private ClientLoginPanel loginPanel;
 	private ClientUserStatus userStatus;
 	
-	public ShowPanel() {
+	public ClientShowPanel() {
 		
 		setPreferredSize(new Dimension(500,300));
 		
