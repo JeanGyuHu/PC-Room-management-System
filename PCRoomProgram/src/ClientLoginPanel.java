@@ -7,10 +7,13 @@ public class ClientLoginPanel extends JPanel{
 	private JTextField txtID, txtPass;
 	private JButton btnInsert, btnLogin;
 	private ClientMakeUser makeUser;
-	//private Client
+	private ClientUserStatus userStatus;
 	private AcListener aL;
-	
-	public ClientLoginPanel() {
+	private ShowPanel show;
+	public ClientLoginPanel(ShowPanel s) {
+		
+		show = s;
+		
 		setPreferredSize(new Dimension(500, 300));
 	    setLayout(null);
 	    setBackground(Color.white);
@@ -46,8 +49,11 @@ public class ClientLoginPanel extends JPanel{
 	    btnLogin = new JButton("로그인");
 	    btnLogin.setBounds(280, 200, 150, 50);
 	    btnLogin.setBackground(Color.white);
+	    btnLogin.addActionListener(aL);
 	    add(btnLogin);
 	   
+	    userStatus = new ClientUserStatus();
+	    
 	}
 	
 	private class AcListener implements ActionListener{
@@ -62,7 +68,7 @@ public class ClientLoginPanel extends JPanel{
 			}
 			else if(obj == btnLogin) {
 				// 로그인일때
-			
+				show.setVisibleUser();
 			}
 			
 		}
