@@ -1,7 +1,12 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
+import javax.swing.event.AncestorListener;
 
 import com.google.gson.Gson;
 
@@ -11,6 +16,9 @@ public class ServerController{
 	ArrayList<Threads> ChatThreads = new ArrayList<Threads>();
 	Logger logger;
 	
+	private DataHandle dataHandle;
+	private PCPanel pcPanel;
+	private PrimaryPanel primary;
 	private BufferedReader inMsg = null;
 	private PrintWriter outMsg = null;
 	
@@ -19,7 +27,69 @@ public class ServerController{
 	public static void main(String[] args) {
 		ServerController c = new ServerController();
 		c.start();
-	}
+	} // main()
+	 
+	public void appMain() { // control
+		//dataHandle.addObj();
+		
+		pcPanel.addButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Object obj = e.getSource();
+				for(int i = 0 ;i<24;i++) {
+					if(obj == pcPanel.btnPC[i]) {
+						// pc좌석 눌렀을때
+					}
+				}
+			}
+		
+		});
+		
+		// PrimaryPanel 버튼 구현
+		primary.addButtonActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				Object obj = e.getSource();
+
+				if(obj == primary.btnMember) {
+					primary.rightPanel.setVisible(true);
+					primary.modifyPanel.setVisible(true);
+					primary.showInformationPanel.setVisible(false);
+					primary.messagePanel.setVisible(false);
+					primary.memberPanel.setVisible(true);
+					pcPanel.setVisible(false);
+					
+				} else if(obj == primary.btnSeat) {
+					primary.rightPanel.setVisible(true);
+					primary.modifyPanel.setVisible(false);
+					primary.showInformationPanel.setVisible(true);
+					primary.messagePanel.setVisible(false);
+					primary.memberPanel.setVisible(false);
+					pcPanel.setVisible(true);
+					
+				} else if(obj == primary.btnMessage) {
+					primary.rightPanel.setVisible(false);
+					primary.modifyPanel.setVisible(false);
+					primary.showInformationPanel.setVisible(false);
+					primary.messagePanel.setVisible(true);
+					
+				} else if(obj == primary.btnLogout) {
+					
+					int result = JOptionPane.showConfirmDialog(primary.topPanel, "종료하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
+					
+					if(result == JOptionPane.YES_OPTION) {
+						System.exit(1);
+					}else if( result == JOptionPane.NO_OPTION) {
+						
+					}
+				}
+			}
+			
+		});
+		
+	} // appMain()
 	
 	public void start() {
 		logger = Logger.getLogger(this.getClass().getName());
@@ -41,7 +111,7 @@ public class ServerController{
 			logger.info("[Server]Start() Exception 발생!!");
 			e.printStackTrace();
 		}
-	}
+	} // start()
 	
 	class Threads extends Thread{
 		private String msg;
@@ -101,7 +171,7 @@ public class ServerController{
 			// 루프를 벗어나면 클라이언트 연결이 종료되므로 스레드 인터럽트
 			this.interrupt();
 			logger.info(this.getName() + "종료됨!!");
-		}
-	}
+		} // run()
+	} // Threads class
 	
-}
+} // ServerContrller

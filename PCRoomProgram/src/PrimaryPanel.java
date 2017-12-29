@@ -4,7 +4,7 @@ import java.awt.event.*;
 
 public class PrimaryPanel extends JPanel {
 
-	private JPanel topPanel,leftPanel,rightPanel,modifyPanel,showInformationPanel,messagePanel;
+	protected JPanel topPanel,leftPanel,rightPanel,modifyPanel,showInformationPanel,messagePanel;
 	protected JButton btnMember,btnSeat, btnMessage, btnLogout;
 	private ImageIcon[] image;
 	private JLabel lblId,lblName,lblPassword,lblBirth,lblTime;
@@ -12,7 +12,7 @@ public class PrimaryPanel extends JPanel {
 	protected JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
 	
-	private PcMemberPanel memberPanel;
+	protected PcMemberPanel memberPanel;
 	
 	private PCPanel pcPanel;
 
