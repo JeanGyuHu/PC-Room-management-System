@@ -1,16 +1,13 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 import javax.swing.*;
 
-public class LoginPanel extends JPanel{
-	
+public class ClientLoginPanel extends JPanel{
 	private JLabel lblID, lblPass;
 	private JTextField txtID, txtPass;
 	private JButton btnInsert, btnLogin;
 	
-	public LoginPanel() {
+	public ClientLoginPanel() {
 		setPreferredSize(new Dimension(500, 300));
 	    setLayout(null);
 	    setBackground(Color.white);
@@ -63,6 +60,4 @@ public class LoginPanel extends JPanel{
 		
 	}
 	
-	
-
 }

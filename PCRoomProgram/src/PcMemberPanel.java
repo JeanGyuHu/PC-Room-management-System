@@ -12,7 +12,9 @@ public class PcMemberPanel extends JPanel {
 	
 	public PcMemberPanel() {
 		setPreferredSize(new Dimension(480, 400));
-		setLayout(new BorderLayout());
+		setLayout(new BorderLayout());		
+		setBackground(Color.white);
+
 		memberList = new JList();
 		title = new JLabel("아이디                이름                비밀번호                생년월일");
 		add(title, BorderLayout.PAGE_START);

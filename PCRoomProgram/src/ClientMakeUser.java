@@ -2,13 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class MakeUser extends JDialog {
-
+public class ClientMakeUser extends JDialog {
+	
 	private JLabel lblTitle,lblName,lblId,lblPassword,lblPasswordCheck,lblBirth;
 	private JTextField[] txt;
 	private JButton btnOk,btnCancel;
 	
-	public MakeUser() {
+	public ClientMakeUser() {
 		
 		setSize(350,400);
 		//setPreferredSize(new Dimension(300,500));
