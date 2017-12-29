@@ -4,31 +4,22 @@ import java.util.*;
 
 public class PcMemberPanel extends JPanel {
 	
-	private JList memberList;
 	private JScrollPane scroll;
-	private String[] str = {};
-	private Vector vec;
-	private JLabel title;
+	private String[] columnNames = {"아이디","이름","비밀번호","남은시간","생년월일"};
+	private Object rowData[][] = {
+			{"gjwlsrb","허진규","123","1","950811"},		
+			{"rlaalsdn","김민우","323","2","950811"},
+			{"tpdud","서세영","241","3","950811"}
+	};
+	private JTable memberTable;
 	
 	public PcMemberPanel() {
 		setPreferredSize(new Dimension(480, 400));
 		setLayout(new BorderLayout());		
 		setBackground(Color.white);
-
-		memberList = new JList();
-		title = new JLabel("아이디                이름                비밀번호                생년월일");
-		add(title, BorderLayout.PAGE_START);
 		
-		vec = new Vector();
-
-		for(int i = 0; i < str.length; i++) {
-			vec.addElement(str[i]);
-		}
-		memberList.setListData(vec);
+		memberTable = new JTable(rowData, columnNames);
 		
-		scroll = new JScrollPane(memberList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		add(scroll, BorderLayout.CENTER);
-		
-		
+		add(memberTable);
 	}
 }
