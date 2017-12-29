@@ -6,12 +6,20 @@ public class ClientLoginPanel extends JPanel{
 	private JLabel lblID, lblPass;
 	private JTextField txtID, txtPass;
 	private JButton btnInsert, btnLogin;
-	
-	public ClientLoginPanel() {
+	private ClientMakeUser makeUser;
+	private ClientUserStatus userStatus;
+	private AcListener aL;
+	private ShowPanel show;
+	public ClientLoginPanel(ShowPanel s) {
+		
+		show = s;
+		
 		setPreferredSize(new Dimension(500, 300));
 	    setLayout(null);
 	    setBackground(Color.white);
 
+	    aL = new AcListener();
+	    
 	    lblID = new JLabel("ID ");
 	    lblID.setBounds(50, 25, 100, 70);
 	    lblID.setHorizontalAlignment(SwingConstants.CENTER);
@@ -33,13 +41,19 @@ public class ClientLoginPanel extends JPanel{
 	    btnInsert = new JButton("회원가입");
 	    btnInsert.setBounds(70, 200, 150, 50);
 	    btnInsert.setBackground(Color.white);
+	    btnInsert.addActionListener(aL);
 	    add(btnInsert);
+	    
+	    makeUser = new ClientMakeUser();
 	    
 	    btnLogin = new JButton("로그인");
 	    btnLogin.setBounds(280, 200, 150, 50);
 	    btnLogin.setBackground(Color.white);
+	    btnLogin.addActionListener(aL);
 	    add(btnLogin);
 	   
+	    userStatus = new ClientUserStatus();
+	    
 	}
 	
 	private class AcListener implements ActionListener{
@@ -50,10 +64,11 @@ public class ClientLoginPanel extends JPanel{
 			
 			if(obj == btnInsert) {
 				//회원가입 일때
+				makeUser.show();
 			}
 			else if(obj == btnLogin) {
 				// 로그인일때
-			
+				show.setVisibleUser();
 			}
 			
 		}
