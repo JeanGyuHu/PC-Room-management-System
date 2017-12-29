@@ -9,11 +9,13 @@ public class PrimaryPanel extends JPanel {
 	private ImageIcon[] image;
 	private JLabel lblId,lblName,lblPassword,lblBirth,lblTime;
 	protected JTextField[] txtInfo;
+	protected JTextField txtMessage;
+	protected JTextArea taMessage;
 	protected JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
 	
 	private PcMemberPanel memberPanel;
-	
+	private TopButtonListener tL;
 	private PCPanel pcPanel;
 
 	public PrimaryPanel(){
@@ -22,6 +24,7 @@ public class PrimaryPanel extends JPanel {
 		setBackground(Color.white);
 		setLayout(null);
 		
+		tL = new TopButtonListener();
 		fnt = new Font("¾ß³îÀÚ ¾ßÃ¼ R",Font.BOLD,20);
 		
 		topPanel = new JPanel();
@@ -30,13 +33,13 @@ public class PrimaryPanel extends JPanel {
 		add(topPanel);
 		
 		rightPanel = new JPanel();
-		rightPanel.setBounds(510,110,300,400);
+		rightPanel.setBounds(510,110,290,400);
 		rightPanel.setBackground(Color.white);
 		rightPanel.setLayout(null);
 		add(rightPanel);
 	
 		modifyPanel = new JPanel();
-		modifyPanel.setBounds(0,300,300,100);
+		modifyPanel.setBounds(0,300,290,100);
 		modifyPanel.setBackground(Color.white);
 		modifyPanel.setLayout(null);
 		modifyPanel.setVisible(false);
@@ -71,10 +74,18 @@ public class PrimaryPanel extends JPanel {
 		showInformationPanel.add(btnPowerOff);
 		
 		messagePanel = new JPanel();
-		messagePanel.setBounds(510,110,300,400);
+		messagePanel.setBounds(510,110,290,400);
 		messagePanel.setBackground(Color.white);
+		messagePanel.setLayout(new BorderLayout());
 		messagePanel.setVisible(false);
 		add(messagePanel);
+		
+		taMessage = new JTextArea(19,28);
+		taMessage.setBorder(BorderFactory.createTitledBorder("MASSAGE"));
+		messagePanel.add(taMessage,BorderLayout.NORTH);
+		
+		txtMessage = new JTextField(26);
+		messagePanel.add(txtMessage,BorderLayout.SOUTH);
 		
 		txtInfo = new JTextField[5];
 		
@@ -139,24 +150,28 @@ public class PrimaryPanel extends JPanel {
 		btnMember.setBorderPainted(false);
 		btnMember.setContentAreaFilled(false);
 		btnMember.setFocusPainted(false);
+		btnMember.addActionListener(tL);
 		topPanel.add(btnMember);
 		
 		btnSeat = new JButton(image[1]);
 		btnSeat.setBorderPainted(false);
 		btnSeat.setContentAreaFilled(false);
 		btnSeat.setFocusPainted(false);
+		btnSeat.addActionListener(tL);
 		topPanel.add(btnSeat);
 		
 		btnMessage = new JButton(image[2]);
 		btnMessage.setBorderPainted(false);
 		btnMessage.setContentAreaFilled(false);
 		btnMessage.setFocusPainted(false);
+		btnMessage.addActionListener(tL);
 		topPanel.add(btnMessage);
 		
 		btnLogout = new JButton(image[3]);
 		btnLogout.setBorderPainted(false);
 		btnLogout.setContentAreaFilled(false);
 		btnLogout.setFocusPainted(false);
+		btnLogout.addActionListener(tL);
 		topPanel.add(btnLogout);		
 	}
 	
@@ -166,7 +181,7 @@ public class PrimaryPanel extends JPanel {
 		btnMessage.addActionListener(listener);
 		btnLogout.addActionListener(listener);
 	}
-	/*
+	
 	 
 	private class TopButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
@@ -205,6 +220,6 @@ public class PrimaryPanel extends JPanel {
 				}
 			}
 		}
-	}*/
+	}
 	
 }
