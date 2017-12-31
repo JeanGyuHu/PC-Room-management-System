@@ -11,7 +11,7 @@ public class Test {
 		
 		PrimaryPanel primary = new PrimaryPanel();
 		frame.getContentPane().add(primary);
-		
+	
 		frame.pack();
 		frame.setVisible(true);
 	}
