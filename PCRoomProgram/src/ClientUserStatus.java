@@ -1,15 +1,18 @@
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ClientUserStatus extends JPanel {
 	
 	private JLabel lblUserId, lblUserRemainTime;
-	private JTextField txtUserId, txtUserRemainTime;
-	private JButton btnMessage, btnLogout;
+	protected JTextField txtUserId, txtUserRemainTime;
+	protected JButton btnMessage, btnLogout;
 	private Font fnt;
 	
 	public ClientUserStatus() {
+		
+		ClientAppManager.getAppManager().setClientUserStatus(this);
 		
 		setPreferredSize(new Dimension(500,300));
 		setBackground(Color.white);
@@ -31,11 +34,13 @@ public class ClientUserStatus extends JPanel {
 		
 		txtUserId = new JTextField();
 		txtUserId.setFont(fnt);
+		txtUserId.setEditable(false);
 		txtUserId.setBounds(170, 25, 300, 50);
 		add(txtUserId);
 		
 		txtUserRemainTime = new JTextField();
 		txtUserRemainTime.setFont(fnt);
+		txtUserRemainTime.setEditable(false);
 		txtUserRemainTime.setBounds(170, 95, 300, 50);
 		add(txtUserRemainTime);
 		
@@ -52,4 +57,26 @@ public class ClientUserStatus extends JPanel {
 		add(btnLogout);
 	}
 	
+	public void LoginUser(String userName, String remainTime) {
+		txtUserId.setText(userName);
+		txtUserRemainTime.setText(remainTime);
+	}
+	
+	public boolean LogOutCheack() {
+		int result = JOptionPane.showConfirmDialog(this, "로그아웃하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
+	
+		if(result == JOptionPane.YES_OPTION) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void addTOAcListener(ActionListener listener) {
+		txtUserId.addActionListener(listener); 
+		txtUserRemainTime.addActionListener(listener);
+		btnMessage.addActionListener(listener); 
+		btnLogout.addActionListener(listener);
+		
+	}
 }
