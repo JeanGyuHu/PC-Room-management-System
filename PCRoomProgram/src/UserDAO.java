@@ -173,6 +173,49 @@ public class UserDAO {
 		
 	}
 	
+	public boolean updateFlag(String id,boolean f) {
+		
+		connectDB();
+		sql = "update member set flag =? where id = ?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setBoolean(1,f);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeDB();
+		if(result > 0)
+			return true;
+		else
+			return false;
+	}
+ public boolean updateTime(String id,int time ) {
+         
+         connectDB();
+         sql = "update member set remaintime =? where id = ?";
+         
+         try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,time);
+            pstmt.setString(2, id);
+            
+            result = pstmt.executeUpdate();
+         }catch(SQLException e) {
+            e.printStackTrace();
+         }
+         
+         closeDB();
+         if(result > 0)
+            return true;
+         else
+            return false;
+      }
+ 
 	public boolean updateUser(String id,String pass,int t) {
 		connectDB();
 		

@@ -82,11 +82,11 @@ public class ServerController{
 						
 					}
 				} else if(obj == serverUI.primary.btnCharge) { //TODO:시간충전
-					
+					userDAO.updateUser(serverUI.primary.txtInfo[0].getText(), serverUI.primary.txtInfo[2].getText(), Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
 				} else if(obj == serverUI.primary.btnModify) { //TODO:사용자 정보 수정
-					
+					userDAO.updateUser(serverUI.primary.txtInfo[0].getText(), serverUI.primary.txtInfo[2].getText(), Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
 				} else if(obj == serverUI.primary.btnDelete){ //TODO:사용자 삭제
-			
+					userDAO.delUser(serverUI.primary.memberPanel.getValue());
 				} else if(obj == serverUI.primary.btnPowerOff) { //TODO:사용자에게 접속종료 창 띄움
 					
 				}
