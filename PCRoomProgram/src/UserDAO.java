@@ -10,7 +10,7 @@ public class UserDAO {
 	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
 	private String strName  = "root";
-	private String strPassword = "0517";
+	private String strPassword = "123123";
 	
 	private String sql;
 	private int result;
@@ -61,10 +61,12 @@ public class UserDAO {
 				UserData data = new UserData();
 				
 				data.setId(rs.getString("id"));
-				data.setPassword(rs.getString("password"));
-				data.setName(rs.getString("name"));
+				data.setPassword(rs.getString("pw"));
+				data.setName(rs.getString("username"));
 				data.setBirth(rs.getString("birth"));
-				data.setTime(rs.getInt("time"));
+				data.setTime(rs.getInt("remaintime"));
+				data.setType(rs.getString("type1"));
+				data.setFlag(rs.getBoolean("flag"));
 				
 				datas.add(data);
 			}
@@ -97,10 +99,12 @@ public class UserDAO {
 			
 			data = new UserData();
 			data.setId(rs.getString("id"));
-			data.setPassword(rs.getString("password"));
-			data.setName(rs.getString("name"));
+			data.setPassword(rs.getString("pw"));
+			data.setName(rs.getString("username"));
 			data.setBirth(rs.getString("birth"));
-			data.setTime(rs.getInt("time"));
+			data.setTime(rs.getInt("remaintime"));
+			data.setType(rs.getString("type1"));
+			data.setFlag(rs.getBoolean("flag"));
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -117,7 +121,7 @@ public class UserDAO {
 	
 		connectDB();
 		
-		sql = "insert into member values(?,?,?,?,?)";
+		sql = "insert into member values(?,?,?,?,?,?,?)";
 		
 		try {
 			
@@ -128,6 +132,8 @@ public class UserDAO {
 			pstmt.setString(3, data.getName());
 			pstmt.setString(4, data.getBirth());
 			pstmt.setInt(5, data.getTime());
+			pstmt.setString(6, data.getType());
+			pstmt.setBoolean(7,data.getFlag());
 			
 			result = pstmt.executeUpdate();
 		
@@ -170,7 +176,7 @@ public class UserDAO {
 	public boolean updateUser(String id,String pass,int t) {
 		connectDB();
 		
-		sql = "update member set password =?, time =? where id = ?";
+		sql = "update member set password =?, time =?, type1=?, flag=? where id = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -189,5 +195,60 @@ public class UserDAO {
 			return true;
 		else
 			return false;
+	}
+	
+	public boolean checkUserId(String user) {
+		
+		boolean flag = false;
+		
+		sql = "select * from member where id = ?";
+		
+		connectDB();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("id").equals(user))
+					flag = true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeDB();
+		
+		return flag;
+		
+	}
+	public boolean checkUserPw(String user,String pass) {
+		
+		boolean flag = false;
+		
+		sql = "select * from member";
+		
+		connectDB();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("id").equals(user)) {
+					if(rs.getString("pw").equals(pass))
+						flag = true;
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeDB();
+		
+		return flag;
+		
 	}
 }
