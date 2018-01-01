@@ -4,18 +4,17 @@ import java.awt.event.*;
 
 public class PrimaryPanel extends JPanel {
 
-	private JPanel topPanel,leftPanel,rightPanel,modifyPanel,showInformationPanel,messagePanel;
-	private JButton btnMember,btnSeat, btnMessage, btnLogout;
+	protected JPanel topPanel,leftPanel,rightPanel,modifyPanel,showInformationPanel,messagePanel;
+	protected JButton btnMember,btnSeat, btnMessage, btnLogout;
 	private ImageIcon[] image;
-	private JLabel lblId,lblName,lblPassword,lblBirth,lblTime;
-	private JTextField[] txtInfo;
-	private JButton btnModify,btnDelete,btnCharge,btnPowerOff;
+	protected JLabel lblId,lblName,lblPassword,lblBirth,lblTime;
+	protected JTextField[] txtInfo;
+	protected JButton btnModify,btnDelete,btnCharge,btnPowerOff;
 	private Font fnt;
-	private TopButtonListener btnL;
 	
-	private PcMemberPanel memberPanel;
+	protected PcMemberPanel memberPanel;
 	
-	private PCPanel pcPanel;
+	protected PCPanel pcPanel;
 
 	public PrimaryPanel(){
 		
@@ -24,7 +23,6 @@ public class PrimaryPanel extends JPanel {
 		setLayout(null);
 		
 		fnt = new Font("야놀자 야체 R",Font.BOLD,20);
-		btnL = new TopButtonListener();
 		
 		topPanel = new JPanel();
 		topPanel.setBounds(0,0,810,100);
@@ -141,67 +139,32 @@ public class PrimaryPanel extends JPanel {
 		btnMember.setBorderPainted(false);
 		btnMember.setContentAreaFilled(false);
 		btnMember.setFocusPainted(false);
-		btnMember.addActionListener(btnL);
 		topPanel.add(btnMember);
 		
 		btnSeat = new JButton(image[1]);
 		btnSeat.setBorderPainted(false);
 		btnSeat.setContentAreaFilled(false);
 		btnSeat.setFocusPainted(false);
-		btnSeat.addActionListener(btnL);
 		topPanel.add(btnSeat);
 		
 		btnMessage = new JButton(image[2]);
 		btnMessage.setBorderPainted(false);
 		btnMessage.setContentAreaFilled(false);
 		btnMessage.setFocusPainted(false);
-		btnMessage.addActionListener(btnL);
 		topPanel.add(btnMessage);
 		
 		btnLogout = new JButton(image[3]);
 		btnLogout.setBorderPainted(false);
 		btnLogout.setContentAreaFilled(false);
 		btnLogout.setFocusPainted(false);
-		btnLogout.addActionListener(btnL);
 		topPanel.add(btnLogout);		
 	}
 	
-	private class TopButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			Object obj = event.getSource();
-			
-			if(obj == btnMember) {
-				rightPanel.setVisible(true);
-				modifyPanel.setVisible(true);
-				showInformationPanel.setVisible(false);
-				messagePanel.setVisible(false);
-				memberPanel.setVisible(true);
-				pcPanel.setVisible(false);
-				
-			} else if(obj == btnSeat) {
-				rightPanel.setVisible(true);
-				modifyPanel.setVisible(false);
-				showInformationPanel.setVisible(true);
-				messagePanel.setVisible(false);
-				memberPanel.setVisible(false);
-				pcPanel.setVisible(true);
-				
-			} else if(obj == btnMessage) {
-				rightPanel.setVisible(false);
-				modifyPanel.setVisible(false);
-				showInformationPanel.setVisible(false);
-				messagePanel.setVisible(true);
-				
-			} else if(obj == btnLogout) {
-				
-				int result = JOptionPane.showConfirmDialog(topPanel, "종료하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
-				
-				if(result == JOptionPane.YES_OPTION) {
-					System.exit(1);
-				}else if( result == JOptionPane.NO_OPTION) {
-					
-				}
-			}
-		}
+	public void addButtonActionListener(ActionListener listener) {
+		btnMember.addActionListener(listener);
+		btnSeat.addActionListener(listener);
+		btnMessage.addActionListener(listener);
+		btnLogout.addActionListener(listener);
 	}
+	
 }
