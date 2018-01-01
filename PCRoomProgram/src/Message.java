@@ -10,9 +10,16 @@ public class Message {
 	private String message;
 	
 	
-	public Message() {	}
-	public Message( String type, String id, String password, String name,
-					String birth, int time, String message) 
+	public Message() {	
+		type = null;
+		id = null;
+		password = null;
+		name = null;
+		birth = null;
+		message = null;
+				
+	}
+	public Message( String type, String id, String password, String name,String birth, int time, String message) 
 	{	
 		this.type = type;
 		this.id  = id;

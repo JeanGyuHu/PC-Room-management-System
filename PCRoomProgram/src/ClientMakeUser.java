@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -6,6 +7,8 @@ public class ClientMakeUser extends JDialog {
 	
 	private JLabel lblTitle,lblName,lblId,lblPassword,lblPasswordCheck,lblBirth;
 	protected JTextField[] txt;
+	protected JPasswordField password;
+	protected JPasswordField checkpassword;
 	protected JButton btnOk,btnCancel;
 	private Font fnt;
 	
@@ -50,13 +53,30 @@ public class ClientMakeUser extends JDialog {
 		lblBirth.setBounds(10,230,140,30);
 		add(lblBirth);
 		
-		txt = new JTextField[5];
+		txt = new JTextField[3];
 		
-		for(int i=0;i<5;i++) {
-			txt[i] = new JTextField(5);
-			txt[i].setBounds(170,70+40*i,120,30);
-			add(txt[i]);
-		}
+		password = new JPasswordField(5);
+		password.setEchoChar('*');
+		password.setBounds(170, 110, 120, 30);
+		add(password);
+		
+		checkpassword = new JPasswordField(5);
+		checkpassword.setEchoChar('*');
+		checkpassword.setBounds(170, 150, 120, 30);
+		add(checkpassword);
+		
+		txt[0] = new JTextField(5);
+		txt[0].setBounds(170,70,120,30);
+		add(txt[0]);
+
+		txt[1] = new JTextField(5);
+		txt[1].setBounds(170,190,120,30);
+		add(txt[1]);
+	
+		txt[2] = new JTextField(5);
+		txt[2].setBounds(170,230,120,30);
+		add(txt[2]);
+
 		btnOk = new JButton("회원가입");
 		btnOk.setFont(fnt);
 		btnOk.setBackground(Color.white);
@@ -71,15 +91,17 @@ public class ClientMakeUser extends JDialog {
 	}
 	
 	public void resetData() {
-		for(int i = 0; i < 5; i++) txt[i].setText("");
+		for(int i = 0; i < 3; i++) txt[i].setText("");
+		password.setText("");
+		checkpassword.setText("");
 	}
 	
 	public void addTOAcListener(ActionListener listener) {
 		txt[0].addActionListener(listener);
 		txt[1].addActionListener(listener);
 		txt[2].addActionListener(listener); 
-		txt[3].addActionListener(listener);
-		txt[4].addActionListener(listener);
+		password.addActionListener(listener);
+		checkpassword.addActionListener(listener);
 		btnOk.addActionListener(listener);
 		btnCancel.addActionListener(listener);
 	}

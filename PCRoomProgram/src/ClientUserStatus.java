@@ -59,6 +59,7 @@ public class ClientUserStatus extends JPanel {
 	
 	public void LoginUser(String userName, String remainTime) {
 		txtUserId.setText(userName);
+		
 		txtUserRemainTime.setText(remainTime);
 	}
 	

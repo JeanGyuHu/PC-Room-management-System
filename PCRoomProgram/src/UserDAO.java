@@ -8,7 +8,7 @@ public class UserDAO {
 	private PreparedStatement pstmt;
 	
 	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";
-	private String jdbcDriver = "com.mysql,jdbc.Driver";
+	private String jdbcDriver = "com.mysql.jdbc.Driver";
 	private String strName  = "root";
 	private String strPassword = "123123";
 	
@@ -61,16 +61,19 @@ public class UserDAO {
 				UserData data = new UserData();
 				
 				data.setId(rs.getString("id"));
-				data.setPassword(rs.getString("password"));
-				data.setName(rs.getString("name"));
+				data.setPassword(rs.getString("pw"));
+				data.setName(rs.getString("username"));
 				data.setBirth(rs.getString("birth"));
-				data.setTime(rs.getInt("time"));
+				data.setTime(rs.getInt("remaintime"));
+				data.setType(rs.getString("type1"));
+				data.setFlag(rs.getBoolean("flag"));
 				
 				datas.add(data);
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
+		
 		closeDB();
 		
 		if(!datas.isEmpty())
@@ -97,10 +100,12 @@ public class UserDAO {
 			
 			data = new UserData();
 			data.setId(rs.getString("id"));
-			data.setPassword(rs.getString("password"));
-			data.setName(rs.getString("name"));
+			data.setPassword(rs.getString("pw"));
+			data.setName(rs.getString("username"));
 			data.setBirth(rs.getString("birth"));
-			data.setTime(rs.getInt("time"));
+			data.setTime(rs.getInt("remaintime"));
+			data.setType(rs.getString("type1"));
+			data.setFlag(rs.getBoolean("flag"));
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -117,7 +122,7 @@ public class UserDAO {
 	
 		connectDB();
 		
-		sql = "insert into member values(?,?,?,?,?)";
+		sql = "insert into member values(?,?,?,?,?,?,?)";
 		
 		try {
 			
@@ -128,6 +133,8 @@ public class UserDAO {
 			pstmt.setString(3, data.getName());
 			pstmt.setString(4, data.getBirth());
 			pstmt.setInt(5, data.getTime());
+			pstmt.setString(6, data.getType());
+			pstmt.setBoolean(7,data.getFlag());
 			
 			result = pstmt.executeUpdate();
 		
@@ -136,7 +143,7 @@ public class UserDAO {
 		closeDB();
 		
 		if(result > 0)
-		return true;
+			return true;
 		else
 			return false;
 	}
@@ -170,7 +177,7 @@ public class UserDAO {
 	public boolean updateUser(String id,String pass,int t) {
 		connectDB();
 		
-		sql = "update member set password =?, time =? where id = ?";
+		sql = "update member set password =?, time =?, type1=?, flag=? where id = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -190,4 +197,101 @@ public class UserDAO {
 		else
 			return false;
 	}
+	
+	public boolean checkUserId(String user) {
+		
+		boolean flag = false;
+		
+		sql = "select * from member";
+		
+		connectDB();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("id").equals(user))
+					flag = true;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeDB();
+		
+		return flag;
+		
+	}
+	public boolean checkUserPw(String user,String pass) {
+		
+		boolean flag = false;
+		
+		sql = "select * from member";
+		
+		connectDB();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getString("id").equals(user)) {
+					if(rs.getString("pw").equals(pass))
+						flag = true;
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeDB();
+		
+		return flag;
+		
+	}
+	 public boolean updateFlag(String id,boolean f) {
+	      
+	      connectDB();
+	      sql = "update member set flag =? where id = ?";
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setBoolean(1,f);
+	         pstmt.setString(2, id);
+	         
+	         result = pstmt.executeUpdate();
+	      }catch(SQLException e) {
+	         e.printStackTrace();
+	      }
+	      
+	      closeDB();
+	      if(result > 0)
+	         return true;
+	      else
+	         return false;
+	   }
+	 public boolean updateTime(String id,int time ) {
+	      
+	      connectDB();
+	      sql = "update member set remaintime =? where id = ?";
+	      
+	      try {
+	         pstmt = conn.prepareStatement(sql);
+	         pstmt.setInt(1,time);
+	         pstmt.setString(2, id);
+	         
+	         result = pstmt.executeUpdate();
+	      }catch(SQLException e) {
+	         e.printStackTrace();
+	      }
+	      
+	      closeDB();
+	      if(result > 0)
+	         return true;
+	      else
+	         return false;
+	   }
 }
