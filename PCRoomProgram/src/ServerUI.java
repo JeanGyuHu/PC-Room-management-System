@@ -1,15 +1,16 @@
 import javax.swing.JFrame;
 
-public class Test {
+public class ServerUI {
 
-	public static void main(String[] args) {
+	protected static PrimaryPanel primary;
+	
+	public ServerUI() {
 		// TODO Auto-generated method stub
 		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		
-		PrimaryPanel primary = new PrimaryPanel();
+		primary = new PrimaryPanel();
 		frame.getContentPane().add(primary);
 		
 		frame.pack();

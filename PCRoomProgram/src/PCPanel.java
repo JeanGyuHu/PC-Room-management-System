@@ -10,7 +10,7 @@ public class PCPanel extends JPanel{
 	private JLabel lblCounter;
 	private JPanel col1, col2, col3;
 	protected JButton btnPC[];
-	private JLabel lblPC[][];
+	protected JLabel lblPC[][];
 	private Font fnt;
 	public static final int TIME = 0;
 	public static final int ID = 1;

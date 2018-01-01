@@ -4,28 +4,28 @@ import javax.swing.*;
 
 public class ClientLoginPanel extends JPanel{
 	private JLabel lblID, lblPass;
-	protected JTextField txtID, txtPass;
+	protected JTextField txtID;
+	protected JPasswordField txtPass;
 	protected JButton btnInsert, btnLogin;
-	private ClientMakeUser makeUser;
-	private AcListener aL;
-	private ClientShowPanel show;
+	private Font fnt;
 	
-	public ClientLoginPanel(ClientShowPanel s) {
+	public ClientLoginPanel() {
 		
-		show = s;
-		
+		ClientAppManager.getAppManager().setClientLoginPanel(this);
 		setPreferredSize(new Dimension(500, 300));
 	    setLayout(null);
 	    setBackground(Color.white);
-
-	    aL = new AcListener();
+	    
+	    fnt = new Font("야놀자 야체 R",Font.BOLD,20);
 	    
 	    lblID = new JLabel("ID ");
+	    lblID.setFont(fnt);
 	    lblID.setBounds(50, 25, 100, 70);
 	    lblID.setHorizontalAlignment(SwingConstants.CENTER);
 	    add(lblID);
 	    
 	    lblPass = new JLabel("Password ");
+	    lblPass.setFont(fnt);
 	    lblPass.setBounds(50, 95, 100, 70);
 	    lblPass.setHorizontalAlignment(SwingConstants.CENTER);
 	    add(lblPass);
@@ -34,44 +34,30 @@ public class ClientLoginPanel extends JPanel{
 	    txtID.setBounds(170, 25, 300, 50);
 	    add(txtID);
 	    
-	    txtPass = new JTextField(20);
+	    txtPass = new JPasswordField(20);
 	    txtPass.setBounds(170, 95, 300, 50);
 	    add(txtPass);
 	    
 	    btnInsert = new JButton("회원가입");
+	    btnInsert.setFont(fnt);
 	    btnInsert.setBounds(70, 200, 150, 50);
 	    btnInsert.setBackground(Color.white);
-	    btnInsert.addActionListener(aL);
 	    add(btnInsert);
 	    
-	    makeUser = new ClientMakeUser();
-	    
 	    btnLogin = new JButton("로그인");
+	    btnLogin.setFont(fnt);
 	    btnLogin.setBounds(280, 200, 150, 50);
 	    btnLogin.setBackground(Color.white);
-	    btnLogin.addActionListener(aL);
 	    add(btnLogin);
 	   
-	   
 	}
 	
-	private class AcListener implements ActionListener{
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Object obj = e.getSource();
-			
-			if(obj == btnInsert) {
-				//회원가입 일때
-				makeUser.show();
-			}
-			else if(obj == btnLogin) {
-				// 로그인일때
-				show.setVisibleUser();
-			}
-			
-		}
+	public void addTOAcListener(ActionListener listener) {
+		txtID.addActionListener(listener);
+		txtPass.addActionListener(listener);
+		btnInsert.addActionListener(listener); 
+		btnLogin.addActionListener(listener);
 		
 	}
-	
 }
