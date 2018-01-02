@@ -31,6 +31,8 @@ public class ServerController{
 	private PcData pcData = new PcData();
 	private ArrayList<String> user; // 사용자의 아이디를 저장할 배열리스트
 	
+	private int seat = 0;
+	
 	Gson gson = new Gson();
 	
 	public ServerController(DataHandle data, ServerUI serverUI) {
@@ -88,7 +90,7 @@ public class ServerController{
 	            } else if(obj == serverUI.primary.btnDelete){ //TODO:사용자 삭제
 	               userDAO.delUser(serverUI.primary.memberPanel.getValue());
 	            } else if(obj == serverUI.primary.btnPowerOff) { //TODO:사용자에게 접속종료 창 띄움
-	               
+	            	
 	            }
 	         }
 	         
@@ -100,15 +102,15 @@ public class ServerController{
 	            // TODO Auto-generated method stub
 	            Object obj = e.getSource();
 	            for(int i = 0 ;i<24;i++) {
-	               if(obj == serverUI.primary.pcPanel.btnPC[i]) {
-	                  // pc좌석 눌렀을때
+	               if(obj == serverUI.primary.pcPanel.btnPC[i] && !serverUI.primary.pcPanel.lblPC[i][1].getText().equals("")) {
+	                  // pc좌석 눌렀을때	    
 	                  userData = userDAO.getUser(serverUI.primary.pcPanel.lblPC[i][1].getText());
 	                  if(userData != null) {
-	                     serverUI.primary.lblId.setText(userData.getId());
-	                     serverUI.primary.lblName.setText(userData.getName());
-	                     serverUI.primary.lblPassword.setText(userData.getBirth());
-	                     serverUI.primary.lblBirth.setText(userData.getId());
-	                     serverUI.primary.lblTime.setText(Integer.toString(userData.getTime()));
+	                     serverUI.primary.txtInfo[0].setText(userData.getId());
+	                     serverUI.primary.txtInfo[1].setText(userData.getName());
+	                     serverUI.primary.txtInfo[2].setText(userData.getBirth());
+	                     serverUI.primary.txtInfo[3].setText(userData.getId());
+	                     serverUI.primary.txtInfo[4].setText(Integer.toString(userData.getTime()));
 	                  }
 	                  
 	               }
@@ -162,10 +164,12 @@ public class ServerController{
 		private UserData d;
 		
 		private String id;
+		private int pos;
 		private BufferedReader inMsg = null;
 		private PrintWriter outMsg = null;
 		private boolean loginStatus = false;
 		private boolean status = false;
+
 		
 		public void run() {
 			
@@ -185,14 +189,25 @@ public class ServerController{
 							d = new UserData(userDAO.getUser(m.getId()));
 							if(d.getPassword().equals(m.getPassword())) {
 								if(!d.getFlag()) {
-									m.setType("accept");
-									m.setId(d.getId());
-									m.setName(d.getName());
-									m.setTime(d.getTime());
-									userDAO.updateFlag(d.getId(), true);
-									outMsg.println(gson.toJson(m));
-									status = false;
-									loginStatus = true; // 로그인했으므로  메세지를 주고 받을 수 있게 준비
+									if(d.getTime() != 0) {
+										m.setType("accept");
+										m.setId(d.getId());
+										id = d.getId();
+										m.setName(d.getName());
+										m.setTime(d.getTime());
+										userDAO.updateFlag(d.getId(), true);
+										outMsg.println(gson.toJson(m));
+										status = false;
+										loginStatus = true; // 로그인했으므로  메세지를 주고 받을 수 있게 준비
+										pos = seat;
+										//serverUI.primary.pcPanel.lblPC[seat++][0].setText(m.getTime());
+										serverUI.primary.pcPanel.lblPC[seat++][1].setText(m.getId());
+									}//if
+									else {
+										m.setType("notime");
+										outMsg.println(gson.toJson(m));
+									}
+										
 								}//if
 								else
 								{
@@ -245,8 +260,9 @@ public class ServerController{
 						
 					}
 					else if(m.getType().equals("logout")) {
-						
-						userDAO.updateTime(m.getId(), m.getTime());
+						seat--;
+						serverUI.primary.pcPanel.lblPC[pos][1].setText("");
+						userDAO.updateFlag(m.getId(), false);
 						loginStatus = false;
 					}
 					
@@ -257,6 +273,7 @@ public class ServerController{
 			}
 			
 			// 루프를 벗어나면 클라이언트 연결이 종료되므로 스레드 인터럽트
+			userDAO.updateFlag(id, false);
 			this.interrupt();
 			logger.info(this.getName() + "종료됨!!");
 		} // run()

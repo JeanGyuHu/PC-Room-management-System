@@ -102,6 +102,8 @@ public class ClientController implements Runnable {
 						loginPanel.txtID.setText("");
 						loginPanel.txtPass.setText("");
 						ui.changLogin();//로그인에 성공한 경우
+					}else if(msg.getType().equals("notime")) { 
+						JOptionPane.showConfirmDialog(loginPanel, "남은 시간이 없습니다!!","알림",JOptionPane.CLOSED_OPTION);
 					}else if(msg.getType().equals("noid")) {
 						JOptionPane.showConfirmDialog(loginPanel, "존재하지 않는 아이디입니다!!","알림",JOptionPane.CLOSED_OPTION);
 						loginPanel.txtPass.setText("");
@@ -168,7 +170,7 @@ public class ClientController implements Runnable {
 					Message msg = new Message();
 					msg.setType("logout");
 					msg.setId(userStatus.txtUserId.getText());
-					//msg.setTime(userStatus.txtUserRemainTime.getText());
+					outMsg.println(gson.toJson(msg));
 					ui.changStart();
 				}
 					

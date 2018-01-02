@@ -23,6 +23,7 @@ public class UserData {
 		name = data.name;
 		birth = data.birth;
 		type = data.type;
+		time = data.time;
 		flag = data.flag;
 	}
 	

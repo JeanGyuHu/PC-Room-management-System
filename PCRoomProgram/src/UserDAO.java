@@ -190,7 +190,13 @@ public class UserDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		closeDB();
+		try {
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		if(result > 0)
 			return true;
