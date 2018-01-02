@@ -165,7 +165,15 @@ public class UserDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		closeDB();
+		try {
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		
 		if(result > 0)
 			return true;
@@ -173,11 +181,27 @@ public class UserDAO {
 			return false;
 		
 	}
-	
+	public int getTime(String id) {
+		int time;
+		
+		connectDB();
+		sql = "select * from member where id = ?";
+		
+		try {
+		
+			pstmt=conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(SQLException e) {e.printStackTrace();}
+
+		return 1;
+	}
 	public boolean updateUser(String id,String pass,int t) {
 		connectDB();
 		
-		sql = "update member set password =?, time =?, type1=?, flag=? where id = ?";
+		sql = "update member set pw =?, remaintime =? where id = ?";
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -190,13 +214,22 @@ public class UserDAO {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-		closeDB();
+		
+		try {
+			conn.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		if(result > 0)
 			return true;
 		else
 			return false;
 	}
+	
 	
 	public boolean checkUserId(String user) {
 		
@@ -277,8 +310,7 @@ public class UserDAO {
 	      
 	      connectDB();
 	      sql = "update member set remaintime =? where id = ?";
-	      
-	      try {
+	   try {
 	         pstmt = conn.prepareStatement(sql);
 	         pstmt.setInt(1,time);
 	         pstmt.setString(2, id);
@@ -289,9 +321,11 @@ public class UserDAO {
 	      }
 	      
 	      closeDB();
+	      
 	      if(result > 0)
 	         return true;
 	      else
 	         return false;
-	   }
+	   }     
+	    
 }

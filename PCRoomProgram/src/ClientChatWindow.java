@@ -17,6 +17,7 @@ public class ClientChatWindow extends JDialog {
 		setLayout(new BorderLayout());
 		setSize(400, 400);
 		msgOut = new JTextArea("",18,30);
+		msgOut.setEditable(false);
 		
 		scroll = new JScrollPane(msgOut, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		add(scroll, BorderLayout.PAGE_START);

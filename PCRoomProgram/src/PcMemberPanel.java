@@ -8,7 +8,7 @@ public class PcMemberPanel extends JPanel {
    
    private JScrollPane scroll;
    protected DefaultTableModel model;   
-   private String[] columnNames = {"아이디","이름","비밀번호","남은시간","생년월일"};
+   private String[] columnNames = {"아이디","이름","비밀번호","생년월일","남은시간"};
    protected JTable memberTable;
    protected Vector<String> vec;
    private UserDAO dao;
@@ -21,20 +21,17 @@ public class PcMemberPanel extends JPanel {
       
       dao = new UserDAO();
       
-      model = new DefaultTableModel(columnNames, 0);
+      model = new DefaultTableModel(columnNames, 0) {public boolean isCellEditable(int i ,int c) {
+    	  return false;
+      }
+      };
       
       memberTable = new JTable(model);
       memberTable.setForeground(Color.black);
       
+      memberTable.getTableHeader().setReorderingAllowed(false);
+      memberTable.isCellEditable(memberTable.getColumnCount(), memberTable.getRowCount());
       vec = new Vector<String>();
-      /*
-       * 삽입예시
-      for(int j = 0; j  < 10 ; j++) {
-         for( int i = 0; i < 5; i++) {
-            vec.addElement(i + "aa"); 
-         }
-         model.addRow(vec);
-      }*/
       
       scroll = new JScrollPane(memberTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
       
@@ -44,6 +41,8 @@ public class PcMemberPanel extends JPanel {
       
       refreshTable();
    }
+   
+   
    public void refreshTable() {
       datas = dao.getAll();
       
@@ -54,14 +53,37 @@ public class PcMemberPanel extends JPanel {
                vec.addElement(d.getId());
                vec.addElement(d.getName());
                vec.addElement(d.getPassword());
-               vec.addElement(Integer.toString(d.getTime()));
                vec.addElement(d.getBirth());
+               vec.addElement(Integer.toString(d.getTime()));
                
                model.addRow(vec);
             }
-           
+        datas.clear();   
       }
-   
+   }
+   public void updateTable(UserData d) {
+	   int col = memberTable.getSelectedRow();
+	   if(d == null)
+		   model.removeRow(col);
+	   else {
+		   vec = new Vector<String>();
+		   vec.addElement(d.getId());
+		   vec.addElement(d.getName());
+		   vec.addElement(d.getPassword());
+		   vec.addElement(d.getBirth());
+		   vec.addElement(Integer.toString(d.getTime()));
+		   model.removeRow(col);
+		   model.insertRow(col, vec);
+	   }
+   }
+   public void insertTable(UserData d) {
+	      vec = new Vector<String>();
+		   vec.addElement(d.getId());
+		   vec.addElement(d.getName());
+		   vec.addElement(d.getPassword());
+		   vec.addElement(d.getBirth());
+		   vec.addElement(Integer.toString(d.getTime()));
+		   model.addRow(vec);
    }
    
    public String getValue() {
@@ -74,4 +96,5 @@ public class PcMemberPanel extends JPanel {
       
       return answer;
    }
+   
 }

@@ -178,6 +178,12 @@ public class PrimaryPanel extends JPanel {
       btnSeat.addActionListener(listener);
       btnMessage.addActionListener(listener);
       btnLogout.addActionListener(listener);
+      btnCharge.addActionListener(listener);
+      btnDelete.addActionListener(listener);
+      btnModify.addActionListener(listener);
+      btnPowerOff.addActionListener(listener);
+      txtMessage.addActionListener(listener);
+      
    }
    
 }

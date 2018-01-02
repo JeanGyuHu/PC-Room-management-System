@@ -20,6 +20,7 @@ public class PCPanel extends JPanel{
 		setPreferredSize(new Dimension(500, 400));
 	    setLayout(null);
 	    setBackground(Color.white);
+
 	    
 	    lblCounter = new JLabel("COUNTER");
 	    lblCounter.setBounds(340, 10, 140, 40);
@@ -44,7 +45,7 @@ public class PCPanel extends JPanel{
 	    col3.setLayout(new GridLayout(4,2));
 	    add(col3);
 	    
-	    fnt = new Font("Consolas",Font.LAYOUT_LEFT_TO_RIGHT, 8);
+	    fnt = new Font("Times",Font.LAYOUT_LEFT_TO_RIGHT, 12);
 	    
 	    btnPC = new JButton[24];
 	    for(int i=0;i<24;i++) {
