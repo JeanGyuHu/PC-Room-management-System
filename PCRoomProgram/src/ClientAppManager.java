@@ -7,6 +7,7 @@ public class ClientAppManager {
 	private ClientMakeUser makeUser;
 	private ClientUserStatus userStatus;
 	private ClientChatWindow chatWindow;
+	private ClientEndMessage warning;
 	
 	public static ClientAppManager getAppManager() {
 		if(s_instance == null) s_instance = new ClientAppManager();
@@ -36,6 +37,15 @@ public class ClientAppManager {
 	public ClientLoginPanel getClientLoginPanel() {
 		return loginPanel;
 	}
+	
+	public void setClientEndMessage(ClientEndMessage warning) {
+		this.warning = warning;
+	}
+	
+	public ClientEndMessage getClientEndMessage() {
+		return warning;
+	}
+	
 	
 	public void setClientUI(ClientUI u) {
 		this.ui = u;

@@ -96,7 +96,13 @@ public class ServerController{
             	   userDAO.delUser(serverUI.primary.memberPanel.getValue());
             	   serverUI.primary.memberPanel.updateTable(null);
                } else if(obj == serverUI.primary.btnPowerOff) { //TODO:사용자에게 접속종료 창 띄움
-                  
+            	   userDAO.updateFlag(serverUI.primary.txtInfo[0].getText(), false);
+            	   try {
+						outMsg = new PrintWriter(s.getOutputStream(), true);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+            	   outMsg.println(gson.toJson(new Message("warning","","","","",0,"",false)));
                } else if(obj == serverUI.primary.txtMessage) {
             	   msgSendAll(serverUI.primary.txtMessage.getText());
             	    serverUI.primary.taMessage.append("안 사장 >> "+ serverUI.primary.txtMessage.getText() + "\n");
@@ -127,9 +133,6 @@ public class ServerController{
  				
  			}
  		});
-         
-         
-			
 			
          serverUI.primary.pcPanel.addButtonActionListener(new ActionListener() {
             @Override
@@ -185,7 +188,7 @@ public class ServerController{
    // 연결된 모든 클라이언트에 메시지 중계
    public void msgSendAll(String msg) {
       for(Threads ct : ChatThreads) { // 스레드의 메시지들을 받아와 클라이언트에 메시지를 전송
-         ct.outMsg.println(gson.toJson(new Message("message", "","","","",0,msg)));
+         ct.outMsg.println(gson.toJson(new Message("message", "","","","",0,msg,true)));
         
       } // 보내진 모든 메시지를 받아옴
    }
@@ -204,7 +207,6 @@ public class ServerController{
 
       
       public void run() {
-         
          try {
             // 통신소켓의 스트림을 받아 입출력 스트림 연결
             inMsg = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -215,6 +217,7 @@ public class ServerController{
             while(status) {
                msg = inMsg.readLine();
                m = gson.fromJson(msg, Message.class);
+              
                if(m.getType().equals("login")) {
                   System.out.println(m.getId());
                   if(userDAO.checkUserId(m.getId())) {
@@ -260,6 +263,7 @@ public class ServerController{
                   }//else
                   
                }//if
+               
                if(m.getType().equals("makeuser")) {
                   if(userDAO.checkUserId(m.getId())) {
                      m.setType("already");
@@ -299,8 +303,7 @@ public class ServerController{
                   serverUI.primary.pcPanel.lblPC[pos][1].setText("");
                   userDAO.updateFlag(m.getId(), false);
                   loginStatus = false;
-               }
-               
+               }       
             } // while()
          } catch (IOException e1) {
             // TODO Auto-generated catch block

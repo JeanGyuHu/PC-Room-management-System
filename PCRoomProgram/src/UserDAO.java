@@ -10,7 +10,7 @@ public class UserDAO {
 	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
 	private String strName  = "root";
-	private String strPassword = "123123";
+	private String strPassword = "0517";
 	
 	private String sql;
 	private int result;
