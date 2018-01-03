@@ -98,7 +98,6 @@ public class ClientController implements Runnable {
             else {
                msg.setPassword(loginPanel.txtPass.getText());
                msg.setId(loginPanel.txtID.getText());
-               msg.setFlag(true);
                outMsg.println(gson.toJson(msg));
                
                try {
@@ -148,7 +147,6 @@ public class ClientController implements Runnable {
                msg.setPassword(makeUser.password.getText());
                msg.setName(makeUser.txt[1].getText());
                msg.setBirth(makeUser.txt[2].getText());
-               msg.setFlag(true);
                outMsg.println(gson.toJson(msg));
                
                try {
@@ -182,11 +180,11 @@ public class ClientController implements Runnable {
                Message msg = new Message();
                msg.setType("logout");
                msg.setId(userStatus.txtUserId.getText());
-               msg.setFlag(true);
                outMsg.println(gson.toJson(msg));
                loginFlag = false;
                chatWindow.msgOut.setText("");
                ui.changStart();
+               warning.dispose();
             }
                
          }else if(obj == userStatus.btnMessage) {
@@ -194,7 +192,7 @@ public class ClientController implements Runnable {
          }else if(obj == chatWindow.btnExit) {
             chatWindow.dispose();
          }else if (obj == chatWindow.msgInput) {
-        	 outMsg.println(gson.toJson(new Message("message","","","","",0,chatWindow.msgInput.getText(),true)));
+        	 outMsg.println(gson.toJson(new Message("message","","","","",0,chatWindow.msgInput.getText())));
         	 chatWindow.msgOut.append("나  >> " + chatWindow.msgInput.getText() + "\n");
         	 chatWindow.msgInput.setText("");
             //서버로 부터 메세지를 읽어온 후에 메세지 갱신

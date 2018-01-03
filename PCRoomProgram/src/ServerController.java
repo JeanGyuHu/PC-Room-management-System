@@ -102,7 +102,7 @@ public class ServerController{
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-            	   outMsg.println(gson.toJson(new Message("warning","","","","",0,"",false)));
+            	   outMsg.println(gson.toJson(new Message("warning","","","","",0,"")));
                } else if(obj == serverUI.primary.txtMessage) {
             	   msgSendAll(serverUI.primary.txtMessage.getText());
             	    serverUI.primary.taMessage.append("안 사장 >> "+ serverUI.primary.txtMessage.getText() + "\n");
@@ -159,7 +159,6 @@ public class ServerController{
          
          //TODO:PcUserPanel의 버튼 기능 :리스트의 유저를 눌렀을때, 해당 유저의 정보띄우는 기능
          
-         
       } // appMain()
    
    public void start() {      
@@ -188,7 +187,7 @@ public class ServerController{
    // 연결된 모든 클라이언트에 메시지 중계
    public void msgSendAll(String msg) {
       for(Threads ct : ChatThreads) { // 스레드의 메시지들을 받아와 클라이언트에 메시지를 전송
-         ct.outMsg.println(gson.toJson(new Message("message", "","","","",0,msg,true)));
+         ct.outMsg.println(gson.toJson(new Message("message", "","","","",0,msg)));
         
       } // 보내진 모든 메시지를 받아옴
    }
