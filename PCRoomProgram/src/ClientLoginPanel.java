@@ -3,11 +3,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class ClientLoginPanel extends JPanel{
-	private JLabel lblID, lblPass;
-	protected JTextField txtID;
-	protected JPasswordField txtPass;
-	protected JButton btnInsert, btnLogin;
-	private Font fnt;
+	private JLabel lblID, lblPass; // ID와 비밀번호라는 글을 띄울 라벨
+	protected JTextField txtID; // ID를 입력받을 텍스트 필드
+	protected JPasswordField txtPass; // 비밀번호를 입력받을 텍스트 필드, 입력값이 보이지 않도록 JPasswordField로 선언 
+	protected JButton btnInsert, btnLogin; // 회원가입 버튼과 로그인 버튼
+	private Font fnt; // 폰트 값
 	
 	public ClientLoginPanel() {
 		
@@ -53,7 +53,7 @@ public class ClientLoginPanel extends JPanel{
 	   
 	}
 	
-
+	// 입력한 ID와 비밀번호, 회원가입, 종료버튼 처리를 위한 이벤트 리스너 // View 와 Controller 분리
 	public void addTOAcListener(ActionListener listener) {
 		txtID.addActionListener(listener);
 		txtPass.addActionListener(listener);

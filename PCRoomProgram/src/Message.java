@@ -1,15 +1,15 @@
 
 public class Message {
 
-	private String type;
-	private String id;
-	private String password;
-	private String name;
-	private String birth;
-	private int time;
-	private String message;
+	private String type; // 메시지의 유형
+	private String id; // 클라이언트의 ID
+	private String password; // 클라이언트의 비밀번호
+	private String name; // 이름
+	private String birth; // 생일
+	private int time; // 남은 시간
+	private String message; // 메시지 내용
 	
-	
+	// 생성자와 각 get/set 메소드
 	public Message() {	
 		type = null;
 		id = null;
