@@ -1,23 +1,23 @@
 import java.sql.*;
 import java.util.ArrayList;
-
+//고객정보에 대해서 데이터베이스와 정보를 주고 받는 클래스
 public class UserDAO {
 
-	private Connection conn;
+	private Connection conn;		//데이터베이스와 정보를 주고 받을때 필요한 3개의 객체
 	private ResultSet rs;
 	private PreparedStatement pstmt;
 	
-	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";
+	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";	//데이터가 저장되는 주소
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
-	private String strName  = "root";
-	private String strPassword = "0517";
+	private String strName  = "root";			//DB아이디
+	private String strPassword = "123123";		//DB비밀번호
 	
-	private String sql;
-	private int result;
+	private String sql;		//sql문
+	private int result;		//각각의 메소드가 동작했는지 안했는지에 대해서 알아내기 위함
 	
 	public UserDAO() {}
 	
-	public void connectDB() {
+	public void connectDB() {		//데이터베이스에 매번 연결할때 사용
 		
 		try {
 			Class.forName(jdbcDriver);
@@ -29,7 +29,7 @@ public class UserDAO {
 		}
 	}	//connectDB()
 	
-	public void closeDB() {
+	public void closeDB() {		//데이터베이스에 연결하고 모두 정보를 주고받은 후에 연결을 끊기 위함
 		
 		try {
 			
@@ -43,24 +43,24 @@ public class UserDAO {
 		
 	}	//closeDB()
 	
-	public ArrayList<UserData> getAll() {
+	public ArrayList<UserData> getAll() {		//모든 정보를 다 불러오기 위함
 		
 		connectDB();
 		
 		sql = "select * from member";// 데이터 베이스에 member 테이블에 존재하는 모든 데이터를 읽어옴
 		
-		ArrayList <UserData> datas = new ArrayList<UserData>();
+		ArrayList <UserData> datas = new ArrayList<UserData>();	//정보들을 저장하기 위함
 		
 		try {
 			
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);		//고객 정보를 전부다 가져오는 쿼리문
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
 				
 				UserData data = new UserData();
 				
-				data.setId(rs.getString("id"));
+				data.setId(rs.getString("id"));				//해당한 줄에 대한 정보를 모두 data에 저장한 후 datas <- ArrayList에 저장한다.
 				data.setPassword(rs.getString("pw"));
 				data.setName(rs.getString("username"));
 				data.setBirth(rs.getString("birth"));

@@ -74,6 +74,7 @@ public class ClientUserStatus extends JPanel {
 		}
 	}
 	
+	
 	// 아이디와 남은 시간의 텍스트 필드, 메시지, 로그아웃 버튼에 대한 이벤트 리스너 처리 // View 와 Controller 분리
 	public void addTOAcListener(ActionListener listener) {
 		txtUserId.addActionListener(listener); 
