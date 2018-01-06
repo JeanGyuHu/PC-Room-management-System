@@ -8,7 +8,7 @@ public class PcMemberPanel extends JPanel {
    
    private JScrollPane scroll;
    protected DefaultTableModel model;   
-   private String[] columnNames = {"아이디","이름","비밀번호","남은시간","생년월일"};
+   private String[] columnNames = {"아이디","이름","비밀번호","생년월일","남은시간"};
    protected JTable memberTable;
    protected Vector<String> vec;
    private UserDAO dao;
@@ -21,20 +21,17 @@ public class PcMemberPanel extends JPanel {
       
       dao = new UserDAO();
       
-      model = new DefaultTableModel(columnNames, 0);
+      model = new DefaultTableModel(columnNames, 0) {public boolean isCellEditable(int i ,int c) {
+    	  return false;
+      }
+      };
       
       memberTable = new JTable(model);
       memberTable.setForeground(Color.black);
       
+      memberTable.getTableHeader().setReorderingAllowed(false);
+      memberTable.isCellEditable(memberTable.getColumnCount(), memberTable.getRowCount());
       vec = new Vector<String>();
-      /*
-       * 삽입예시
-      for(int j = 0; j  < 10 ; j++) {
-         for( int i = 0; i < 5; i++) {
-            vec.addElement(i + "aa"); 
-         }
-         model.addRow(vec);
-      }*/
       
       scroll = new JScrollPane(memberTable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
       
@@ -44,34 +41,47 @@ public class PcMemberPanel extends JPanel {
       
       refreshTable();
    }
+   
+   
    public void refreshTable() {
-      datas = dao.getAll();
-      
+      datas = dao.getAll();// 데이터 베이스에서 존재하는 회원 정보를 다 읽어온후
       if(datas!=null) {
          for(UserData d :datas) {
-            
-              vec = new Vector<String>();
-               vec.addElement(d.getId());
-               vec.addElement(d.getName());
-               vec.addElement(d.getPassword());
-               vec.addElement(Integer.toString(d.getTime()));
-               vec.addElement(d.getBirth());
-               
-               model.addRow(vec);
+        	 vec = new Vector<String>();
+             vec.addElement(d.getId());
+             vec.addElement(d.getName());
+             vec.addElement(d.getPassword());
+             vec.addElement(d.getBirth());
+             vec.addElement(Integer.toString(d.getTime()));               
+             model.addRow(vec);// 테이블에 삽입
             }
-           
+        datas.clear();   
       }
-   
    }
+   public void updateTable(UserData d) {
+	   int col = memberTable.getSelectedRow();// 선택된 회원
+	   if(d == null)// 만약 삭제의 경우
+		   model.removeRow(col);// 선택한 열을 삭제
+	   else {
+		   vec = new Vector<String>();
+		   vec.addElement(d.getId());
+		   vec.addElement(d.getName());
+		   vec.addElement(d.getPassword());
+		   vec.addElement(d.getBirth());
+		   vec.addElement(Integer.toString(d.getTime()));
+		   model.removeRow(col);// 그전의 있던 정보를 삭제하고
+		   model.insertRow(col, vec);// 새로 갱신된 정보를 삽입
+	   }
+   }//updateTable(UserData d)
+   public void insertTable(UserData d) {
+	   vec = new Vector<String>();
+	   vec.addElement(d.getId());
+	   vec.addElement(d.getName());
+	   vec.addElement(d.getPassword());
+	   vec.addElement(d.getBirth());
+	   vec.addElement(Integer.toString(d.getTime()));
+	   model.addRow(vec);
+	   // 새로운 회원가입이 들어온 경우에
+   }//insertTable(UserData d)
    
-   public String getValue() {
-      int row = memberTable.getSelectedRow();
-      int col = memberTable.getSelectedColumn();
-      String answer=null;
-      Object value = memberTable.getValueAt(row, col);
-      
-      answer = value.toString();
-      
-      return answer;
-   }
 }

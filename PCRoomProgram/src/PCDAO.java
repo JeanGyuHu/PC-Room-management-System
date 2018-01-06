@@ -14,7 +14,7 @@ public class PCDAO {
 	
 	private String sql;
 
-	//»ý¼ºÀÚ
+	
 	public PCDAO() {}
 	
 	public void connectDB() {

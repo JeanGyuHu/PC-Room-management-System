@@ -4,7 +4,8 @@ import javax.swing.*;
 
 public class ClientLoginPanel extends JPanel{
 	private JLabel lblID, lblPass;
-	protected JTextField txtID, txtPass;
+	protected JTextField txtID;
+	protected JPasswordField txtPass;
 	protected JButton btnInsert, btnLogin;
 	private Font fnt;
 	
@@ -33,7 +34,8 @@ public class ClientLoginPanel extends JPanel{
 	    txtID.setBounds(170, 25, 300, 50);
 	    add(txtID);
 	    
-	    txtPass = new JTextField(20);
+	    txtPass = new JPasswordField(20);
+	    txtPass.setEchoChar('*');
 	    txtPass.setBounds(170, 95, 300, 50);
 	    add(txtPass);
 	    

@@ -10,6 +10,7 @@ public class ClientUI extends JFrame {
 	private ClientMakeUser makeUser;
 	private ClientUserStatus userStatus;
 	private ClientChatWindow chatWindow;
+	private ClientEndMessage warning;
 	
 	public ClientUI() {
 		
@@ -21,6 +22,7 @@ public class ClientUI extends JFrame {
 		makeUser = new ClientMakeUser();
 		userStatus = new ClientUserStatus();
 		chatWindow = new ClientChatWindow();
+		warning = new ClientEndMessage();
 		
 		tab = new JPanel();
 		cardLayout = new CardLayout();

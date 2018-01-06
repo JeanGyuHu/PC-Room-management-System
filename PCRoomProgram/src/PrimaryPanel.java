@@ -15,6 +15,7 @@ public class PrimaryPanel extends JPanel {
    protected JTextArea taMessage;
    protected JScrollPane scroll;
    protected PcMemberPanel memberPanel;
+   protected JComboBox combo;
    
    protected PCPanel pcPanel;
 
@@ -79,15 +80,20 @@ public class PrimaryPanel extends JPanel {
       messagePanel.setVisible(false);
       add(messagePanel);
       
-      taMessage = new JTextArea();
+      taMessage = new JTextArea("",19,10);
       taMessage.setEditable(false);
-      txtMessage = new JTextField();
+
+      txtMessage = new JTextField(19);
       
       scroll = new JScrollPane(taMessage,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      scroll.setBorder(BorderFactory.createTitledBorder("MESSAGE"));
+      scroll.setBorder(BorderFactory.createTitledBorder("MESSAGE")); 
       
-      messagePanel.add(scroll,BorderLayout.CENTER);
-      messagePanel.add(txtMessage,BorderLayout.SOUTH);
+      combo = new JComboBox();
+      
+      
+      messagePanel.add(scroll,BorderLayout.PAGE_START);
+      messagePanel.add(txtMessage,BorderLayout.EAST);
+      messagePanel.add(combo,BorderLayout.CENTER);
       
       txtInfo = new JTextField[5];
       
@@ -178,9 +184,11 @@ public class PrimaryPanel extends JPanel {
       btnSeat.addActionListener(listener);
       btnMessage.addActionListener(listener);
       btnLogout.addActionListener(listener);
-      btnCharge.addActionListener(listener); 
-      btnModify.addActionListener(listener);
+      btnCharge.addActionListener(listener);
       btnDelete.addActionListener(listener);
+      btnModify.addActionListener(listener);
+      btnPowerOff.addActionListener(listener);
+      txtMessage.addActionListener(listener);
       
    }
    

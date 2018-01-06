@@ -66,12 +66,6 @@ public class PCPanel extends JPanel{
 		    	btnPC[i].add(lblPC[i][j]);
 	    	}
 	    }
-	    /*
-	    lblPC[20][TIME].setText("1");
-	    lblPC[20][ID].setText("ssyaoao");
-	    lblPC[20][MESSAGE].setText("YES");
-	    */
-	    
 	} // PCPanel()
 	
 	public void addButtonActionListener(ActionListener listener) {
