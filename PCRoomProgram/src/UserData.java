@@ -1,13 +1,14 @@
 public class UserData {
 
-   private String id;
-   private String password;
-   private String name;
-   private String birth;
-   private int time;
+   private String id; // 사용자의 ID
+   private String password; // 사용자의 비밀번호
+   private String name; // 사용자의 이름
+   private String birth; // 사용자의 생년월일
+   private int time; // 사용자의 남은 시간
    private String type;
-   private boolean flag;
+   private boolean flag; // 사용자가 로그인 된 플래그
    
+   // 생성자와 get/set 메소드
    public UserData() {
       id = null;
       password = null;

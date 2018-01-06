@@ -6,11 +6,12 @@ import java.awt.event.*;
 public class ClientMakeUser extends JDialog {
 	
 	private JLabel lblTitle,lblName,lblId,lblPassword,lblPasswordCheck,lblBirth;
-	protected JTextField[] txt;
-	protected JPasswordField password;
-	protected JPasswordField checkpassword;
-	protected JButton btnOk,btnCancel;
-	private Font fnt;
+	// 순서대로 제목, 이름, ID, 비밀번호, 비밀번호 재입력, 생일이라는 글귀를 띄울 라벨
+	protected JTextField[] txt; // 각 정보들을 입력받을 배열 텍스트 필드
+	protected JPasswordField password; // 비밀번호를 입력받을 JPasswordField
+	protected JPasswordField checkpassword; // 비밀번호를 재입력받을 JPasswordField
+	protected JButton btnOk,btnCancel; // 회원가입 확인 버튼과 취소버튼
+	private Font fnt; // 폰트 값
 	
 	public ClientMakeUser() {
 		
@@ -65,15 +66,15 @@ public class ClientMakeUser extends JDialog {
 		checkpassword.setBounds(170, 150, 120, 30);
 		add(checkpassword);
 		
-		txt[0] = new JTextField(5);
+		txt[0] = new JTextField(5); // 아이디 입력
 		txt[0].setBounds(170,70,120,30);
 		add(txt[0]);
 
-		txt[1] = new JTextField(5);
+		txt[1] = new JTextField(5); // 이름 입력
 		txt[1].setBounds(170,190,120,30);
 		add(txt[1]);
 	
-		txt[2] = new JTextField(5);
+		txt[2] = new JTextField(5); // 생년월일 입력
 		txt[2].setBounds(170,230,120,30);
 		add(txt[2]);
 
@@ -90,12 +91,14 @@ public class ClientMakeUser extends JDialog {
 		add(btnCancel);
 	}
 	
+	// 입력받았던 텍스트 필드의 값들을 모두 초기화하기 위한 함수
 	public void resetData() {
 		for(int i = 0; i < 3; i++) txt[i].setText("");
 		password.setText("");
 		checkpassword.setText("");
 	}
 	
+	// 아이디, 이름, 생년월일, 비밀번호, 비밀번호 재입력 텍스트 필드와 각 버튼들에 대한 이벤트 리스너 // View 와 Controller 분리
 	public void addTOAcListener(ActionListener listener) {
 		txt[0].addActionListener(listener);
 		txt[1].addActionListener(listener);

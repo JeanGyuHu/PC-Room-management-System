@@ -10,7 +10,7 @@ public class UserDAO {
 	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
 	private String strName  = "root";
-	private String strPassword = "123123";
+	private String strPassword = "0517";
 	
 	private String sql;
 	private int result;
@@ -47,7 +47,7 @@ public class UserDAO {
 		
 		connectDB();
 		
-		sql = "select * from member";
+		sql = "select * from member";// 데이터 베이스에 member 테이블에 존재하는 모든 데이터를 읽어옴
 		
 		ArrayList <UserData> datas = new ArrayList<UserData>();
 		
@@ -68,7 +68,7 @@ public class UserDAO {
 				data.setType(rs.getString("type1"));
 				data.setFlag(rs.getBoolean("flag"));
 				
-				datas.add(data);
+				datas.add(data);// 읽어온 데이터를 arraylist에 저장
 			}
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -86,7 +86,7 @@ public class UserDAO {
 		
 		connectDB();
 		
-		sql = "select * from member where id = ?";
+		sql = "select * from member where id = ?";// 데이터베이스에 해당 id의 정보를 찾아서 넘겨줌
 		
 		UserData data = null;
 		
@@ -122,7 +122,7 @@ public class UserDAO {
 	
 		connectDB();
 		
-		sql = "insert into member values(?,?,?,?,?,?,?)";
+		sql = "insert into member values(?,?,?,?,?,?,?)";// 넘어온 데이터로 데이터 베이스에 새로운 회원을 만듬
 		
 		try {
 			
@@ -152,7 +152,7 @@ public class UserDAO {
 		
 		connectDB();
 		
-		sql = "delete from member where id = ?";
+		sql = "delete from member where id = ?";// 넘어온 id를 통하여 데이터 베이스에 존재하는 회원을 삭제함
 		
 		UserData data = null;
 		
@@ -185,7 +185,7 @@ public class UserDAO {
 		int time;
 		
 		connectDB();
-		sql = "select * from member where id = ?";
+		sql = "select * from member where id = ?";// 넘어온 id의 남은 시간을 조회
 		
 		try {
 		
@@ -201,7 +201,7 @@ public class UserDAO {
 	public boolean updateUser(String id,String pass,int t) {
 		connectDB();
 		
-		sql = "update member set pw =?, remaintime =? where id = ?";
+		sql = "update member set pw =?, remaintime =? where id = ?";// 해당 아이디의 비밀번호와 남은 시간을 수정
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -231,11 +231,11 @@ public class UserDAO {
 	}
 	
 	
-	public boolean checkUserId(String user) {
+	public boolean checkUserId(String id) {
 		
 		boolean flag = false;
 		
-		sql = "select * from member";
+		sql = "select * from member";// 넘어온 아이디를 데이터 베이스에서 검색하여 존재하면 true 없으면  false를 반환
 		
 		connectDB();
 		
@@ -245,36 +245,8 @@ public class UserDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				if(rs.getString("id").equals(user))
+				if(rs.getString("id").equals(id))
 					flag = true;
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		closeDB();
-		
-		return flag;
-		
-	}
-	public boolean checkUserPw(String user,String pass) {
-		
-		boolean flag = false;
-		
-		sql = "select * from member";
-		
-		connectDB();
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				if(rs.getString("id").equals(user)) {
-					if(rs.getString("pw").equals(pass))
-						flag = true;
-				}
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -288,7 +260,7 @@ public class UserDAO {
 	 public boolean updateFlag(String id,boolean f) {
 	      
 	      connectDB();
-	      sql = "update member set flag =? where id = ?";
+	      sql = "update member set flag =? where id = ?";// 넘어온 아이디의 로그인 플래그를 수정
 	      
 	      try {
 	         pstmt = conn.prepareStatement(sql);
@@ -309,23 +281,26 @@ public class UserDAO {
 	 public boolean updateTime(String id,int time ) {
 	      
 	      connectDB();
-	      sql = "update member set remaintime =? where id = ?";
-	   try {
-	         pstmt = conn.prepareStatement(sql);
-	         pstmt.setInt(1,time);
-	         pstmt.setString(2, id);
+	      sql = "update member set remaintime =? where id = ?";// 해당 아이디의 남은 시간을 새로 변경
+	      try {
+	    	  pstmt = conn.prepareStatement(sql);
+	    	  pstmt.setInt(1,time);
+	    	  pstmt.setString(2, id);
 	         
-	         result = pstmt.executeUpdate();
+	    	  result = pstmt.executeUpdate();
+	    	  
+	    	  conn.close();
+		      pstmt.close();
 	      }catch(SQLException e) {
 	         e.printStackTrace();
 	      }
 	      
-	      closeDB();
+	      
 	      
 	      if(result > 0)
-	         return true;
+	    	  return true;
 	      else
-	         return false;
+	    	  return false;
 	   }     
 	    
 }

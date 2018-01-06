@@ -1,13 +1,11 @@
 
 public class PcData {
 
-	private String IP;
-	private int key;
+	private String IP; // 301호 PC의 IP
+	private int key; // PC의 번호 (1,2,3...,24)
 		
 	public PcData(){
-		
 		IP = null;
-		
 	}
 	
 	//get/set
