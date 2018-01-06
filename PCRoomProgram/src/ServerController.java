@@ -177,6 +177,7 @@ public class ServerController{
             ChatThreads.add(chat);
             //스레드 시작
             chat.start();
+            System.out.println(s.getInetAddress());
          }
       }catch(Exception e) {
          logger.info("[Server]Start() Exception 발생!!");
@@ -216,7 +217,6 @@ public class ServerController{
             while(status) {
                msg = inMsg.readLine();
                m = gson.fromJson(msg, Message.class);
-              
                if(m.getType().equals("login")) {
                   System.out.println(m.getId());
                   if(userDAO.checkUserId(m.getId())) {
