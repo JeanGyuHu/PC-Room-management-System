@@ -10,7 +10,6 @@ import com.google.gson.Gson;
 import java.awt.*;
 import java.util.*;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class ClientController implements Runnable {
    
@@ -27,8 +26,8 @@ public class ClientController implements Runnable {
    private ClientEndMessage warning;
    private AcListener acL;
    private boolean loginFlag = false;
-   private UserDAO dao;
-   private Timer timer = new Timer();
+   
+   private Timer timer;
 
    int num;
    
@@ -51,7 +50,6 @@ public class ClientController implements Runnable {
       makeUser.addTOAcListener(acL);
       
       gson = new Gson();
-      dao = new UserDAO();
       // 데이터 생성
    }// ClientController()
    
@@ -80,7 +78,7 @@ public class ClientController implements Runnable {
     		  msg = inMsg.readLine();// 서버로부터 메세지를 읽어온 후에 
     		  m = gson.fromJson(msg, Message.class);// Gson으로 메세지를 파싱
     		  if(m.getType().equals("warning")) {//만약 넘어온 메세지의 타입이 warning인 경우에 사용종료하라는 창을 띄워줌
-    			  System.out.println("로그아웃");
+    			  System.out.println("오그아웃");
     			  warning.show();
     		  }else if(m.getType().equals("exit")) {
     			  loginFlag = false;
@@ -127,32 +125,38 @@ public class ClientController implements Runnable {
                   loginFlag = true;// 플래그를 트루로 변경
                   thread.start();// 메세지를 주고 받을 수 있는 상태를 만들어줌
                   ui.changLogin();//로그인 화면을 클라이언트에게 보여줌
-                  num = Integer.parseInt(userStatus.txtUserRemainTime.getText());
                   
-                  TimerTask timerTask = new TimerTask()	//타이머가 맞춰진 시간마다 어떤 일이 일어날지 정하는 객체
-                  {
-               	 public void run() {
-               		 
-               		 if(num == 0) {	//시간이 다 달았을때
-                         Message msg = new Message();
-                         
-               			 dao.updateTime(userStatus.txtUserId.getText(), 0);	//시간이 0이 됬음을 저장하고 로그아웃을 시키고 타이머를 중지한다.
-               			 ui.changStart();
-               			 timer.cancel();
-               			 
-                         msg.setType("notime");					//시간이 없음으로 서버에 보낸다.
-                         msg.setId(userStatus.txtUserId.getText());	
-                         msg.setTime(Integer.parseInt(userStatus.txtUserRemainTime.getText()));
-                         outMsg.println(gson.toJson(msg));
-               		 } else {
-               			 num--;	//60초에 1씩 시간을 줄인다 시간이 전부 분으로 표현되어있음
-                         userStatus.txtUserRemainTime.setText(String.valueOf(num));		//텍스트필드의 떠있는 숫자를 변화시킨다.
-                         dao.updateTime(userStatus.txtUserId.getText(),num);			//데이터베이스의 시간을 업데이트한다.
-               		 }
-               		 
-               	 }
-                  };
-                  timer.schedule(timerTask, 60000, 60000);		//첫 시작이 60초 후 , 그 후 60초 후마다 1씩 감소
+                  num = msg.getTime();
+                  timer = new Timer();
+                  TimerTask timerTask = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						Message msg = new Message();
+						if(num == 0) {
+							
+				               msg.setType("logout");
+				               msg.setId(userStatus.txtUserId.getText());
+				               msg.setTime(0);
+				               outMsg.println(gson.toJson(msg));//서버로 로그아웃 메세지를 넘겨줌
+				               loginFlag = false;
+				               chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
+				               ui.changStart();
+				               warning.dispose();
+				               chatWindow.dispose();
+						}else {
+							num--;	//60초에 1씩 시간을 줄인다 시간이 전부 분으로 표현되어있음
+							msg.setType("time");					//시간이 없음으로 서버에 보낸다.
+							msg.setId(userStatus.txtUserId.getText());	
+							msg.setTime(num);
+	               			userStatus.txtUserRemainTime.setText(String.valueOf(num));		//텍스트필드의 떠있는 숫자를 변화시킨다.
+	               			outMsg.println(gson.toJson(msg));
+	               		 }
+	               		 
+					}
+				};
+				timer.schedule(timerTask, 60000,60000);
                }else if(msg.getType().equals("notime")) {// 시간이 없는 경우 
                   JOptionPane.showConfirmDialog(loginPanel, "남은 시간이 없습니다!!","알림",JOptionPane.CLOSED_OPTION);
                }else if(msg.getType().equals("noid")) {// 아이디가 존재하지 않는 경우
@@ -216,11 +220,9 @@ public class ClientController implements Runnable {
                Message msg = new Message();
                msg.setType("logout");
                msg.setId(userStatus.txtUserId.getText());
-               msg.setTime(Integer.parseInt(userStatus.txtUserRemainTime.getText()));
                outMsg.println(gson.toJson(msg));//서버로 로그아웃 메세지를 넘겨줌
-               timer.cancel();
-               dao.updateTime(userStatus.txtUserId.getText(),num);
                loginFlag = false;
+               timer.cancel();
                chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
                ui.changStart();
                warning.dispose();
