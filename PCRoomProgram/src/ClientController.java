@@ -156,7 +156,7 @@ public class ClientController implements Runnable {
 	               		 
 					}
 				};
-				timer.schedule(timerTask, 6000,6000);
+				timer.schedule(timerTask, 60000,60000);
                }else if(msg.getType().equals("notime")) {// 시간이 없는 경우 
                   JOptionPane.showConfirmDialog(loginPanel, "남은 시간이 없습니다!!","알림",JOptionPane.CLOSED_OPTION);
                }else if(msg.getType().equals("noid")) {// 아이디가 존재하지 않는 경우
