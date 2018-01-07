@@ -52,7 +52,7 @@ public class PcMemberPanel extends JPanel {
              vec.addElement(d.getName());
              vec.addElement(d.getPassword());
              vec.addElement(d.getBirth());
-             vec.addElement(Integer.toString(d.getTime()));               
+             vec.addElement(Integer.toString(d.getTime())+ "분");               
              model.addRow(vec);// 테이블에 삽입
             }
         datas.clear();   
@@ -68,18 +68,39 @@ public class PcMemberPanel extends JPanel {
 		   vec.addElement(d.getName());
 		   vec.addElement(d.getPassword());
 		   vec.addElement(d.getBirth());
-		   vec.addElement(Integer.toString(d.getTime()));
+		   vec.addElement(Integer.toString(d.getTime()) + "분");
+		   System.out.println(col);
 		   model.removeRow(col);// 그전의 있던 정보를 삭제하고
 		   model.insertRow(col, vec);// 새로 갱신된 정보를 삽입
 	   }
    }//updateTable(UserData d)
+   
+   public void updateTime(UserData d) {
+	   int col = 0;
+	
+	   for(col = 0; col < memberTable.getRowCount(); col++) 
+		  if( memberTable.getValueAt(col, 0).equals(d.getId()))// 테이블에서 넘어온 아이디와 같은 경우 
+			  break;
+	   
+	   vec = new Vector<String>();
+	   vec.addElement(d.getId());
+	   vec.addElement(d.getName());
+	   vec.addElement(d.getPassword());
+	   vec.addElement(d.getBirth());
+	   vec.addElement(Integer.toString(d.getTime())+ "분");
+	   model.removeRow(col);// 그전의 있던 정보를 삭제하고
+	   model.insertRow(col, vec);// 새로 갱신된 정보를 삽입
+	   
+	   
+   }//updateTime(UserData d)
+   
    public void insertTable(UserData d) {
 	   vec = new Vector<String>();
 	   vec.addElement(d.getId());
 	   vec.addElement(d.getName());
 	   vec.addElement(d.getPassword());
 	   vec.addElement(d.getBirth());
-	   vec.addElement(Integer.toString(d.getTime()));
+	   vec.addElement(Integer.toString(d.getTime())+ "분");
 	   model.addRow(vec);
 	   // 새로운 회원가입이 들어온 경우에
    }//insertTable(UserData d)

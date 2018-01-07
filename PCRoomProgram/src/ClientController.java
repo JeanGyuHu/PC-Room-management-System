@@ -8,6 +8,8 @@ import javax.swing.*;
 import com.google.gson.Gson;
 
 import java.awt.*;
+import java.util.*;
+import java.util.Timer;
 
 public class ClientController implements Runnable {
    
@@ -24,6 +26,10 @@ public class ClientController implements Runnable {
    private ClientEndMessage warning;
    private AcListener acL;
    private boolean loginFlag = false;
+   
+   private Timer timer;
+
+   int num;
    
    public static void main(String[] args) {
       ClientController a = new ClientController();
@@ -113,12 +119,44 @@ public class ClientController implements Runnable {
                   // 메세지를 하나 읽어오고 Gson으로 파싱
                }catch(Exception ex) {}
                if(msg.getType().equals("accept")) {// 만약 넘어온 메세지 타입이 accept이면 로그인에 성공
-                  userStatus.LoginUser(msg.getName(), String.valueOf(msg.getTime()));// 데이터 베이스로 읽어온 데이터 넘겨주어 초기상태를 넘겨주기
+                  userStatus.LoginUser(msg.getId(), String.valueOf(msg.getTime()));// 데이터 베이스로 읽어온 데이터 넘겨주어 초기상태를 넘겨주기
                   loginPanel.txtID.setText("");
                   loginPanel.txtPass.setText("");             
                   loginFlag = true;// 플래그를 트루로 변경
                   thread.start();// 메세지를 주고 받을 수 있는 상태를 만들어줌
                   ui.changLogin();//로그인 화면을 클라이언트에게 보여줌
+                  
+                  num = msg.getTime();
+                  timer = new Timer();
+                  TimerTask timerTask = new TimerTask() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						Message msg = new Message();
+						if(num == 0) {
+							
+				               msg.setType("logout");
+				               msg.setId(userStatus.txtUserId.getText());
+				               msg.setTime(0);
+				               outMsg.println(gson.toJson(msg));//서버로 로그아웃 메세지를 넘겨줌
+				               loginFlag = false;
+				               chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
+				               ui.changStart();
+				               warning.dispose();
+				               chatWindow.dispose();
+						}else {
+							num--;	//60초에 1씩 시간을 줄인다 시간이 전부 분으로 표현되어있음
+							msg.setType("time");					//시간이 없음으로 서버에 보낸다.
+							msg.setId(userStatus.txtUserId.getText());	
+							msg.setTime(num);
+	               			userStatus.txtUserRemainTime.setText(String.valueOf(num));		//텍스트필드의 떠있는 숫자를 변화시킨다.
+	               			outMsg.println(gson.toJson(msg));
+	               		 }
+	               		 
+					}
+				};
+				timer.schedule(timerTask, 6000,6000);
                }else if(msg.getType().equals("notime")) {// 시간이 없는 경우 
                   JOptionPane.showConfirmDialog(loginPanel, "남은 시간이 없습니다!!","알림",JOptionPane.CLOSED_OPTION);
                }else if(msg.getType().equals("noid")) {// 아이디가 존재하지 않는 경우
@@ -184,6 +222,7 @@ public class ClientController implements Runnable {
                msg.setId(userStatus.txtUserId.getText());
                outMsg.println(gson.toJson(msg));//서버로 로그아웃 메세지를 넘겨줌
                loginFlag = false;
+               timer.cancel();
                chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
                ui.changStart();
                warning.dispose();

@@ -179,6 +179,12 @@ public class PrimaryPanel extends JPanel {
       topPanel.add(btnLogout);      
    }
    
+   public void resetTXT() {
+	   for(int i =0;i<5;i++) 
+	         txtInfo[i].setText("");;
+	      
+   }
+   
    public void addButtonActionListener(ActionListener listener) {
       btnMember.addActionListener(listener);
       btnSeat.addActionListener(listener);

@@ -44,7 +44,7 @@ public class PCPanel extends JPanel{
 	    col3.setLayout(new GridLayout(4,2));
 	    add(col3);
 	    
-	    fnt = new Font("Consolas",Font.LAYOUT_LEFT_TO_RIGHT, 8);
+	    fnt = new Font("야놀자 야체 R",Font.LAYOUT_LEFT_TO_RIGHT, 9);
 	    
 	    btnPC = new JButton[24];
 	    for(int i=0;i<24;i++) {
