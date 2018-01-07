@@ -85,9 +85,8 @@ public class ClientController implements Runnable {
                   chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
                   ui.changStart();
     		  }else if(m.getType().equals("changTime")){
-    			  num = m.getTime();
-    			  System.out.println("chag");
-    			  userStatus.LoginUser(m.getId(), String.valueOf(m.getTime()));
+    			  num = m.getTime();// 서버에서 충전한 시간을 새로 넘겨받기
+    			  userStatus.LoginUser(m.getId(), String.valueOf(m.getTime()));// 로그인 화면에서의 시간도 새로 넘겨 받은 시간으로 갱신
     		  }else {
     			  System.out.println(m.getType());
     			  chatWindow.msgOut.append("안 사장님  >> " + m.getMessage() + "\n");// txtArea에 읽어온 메세지를 사용자에게 표시

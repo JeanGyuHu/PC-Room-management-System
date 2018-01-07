@@ -93,12 +93,12 @@ public class ServerController{
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
             		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
             		UserData d = userDAO.getUser(serverUI.primary.txtInfo[0].getText());
-            		if(d.getFlag()) {
+            		if(d.getFlag()) {//만약 현재 로그인 중인 회원이면 즉각적으로 클라이언트 쪽도 시간을 갱신하기 위해서
             			for(Threads ct : ChatThreads)
-                	   		if(ct.id.equals(d.getId())) {// 선택한 회원을 종료 시킬 때
+                	   		if(ct.id.equals(d.getId())) {
                 	   			ct.outMsg.println(gson.toJson(new Message("changTime", d.getId(),"","","",d.getTime(),"")));
-                	   			serverUI.primary.pcPanel.lblPC[ct.pos][0].setText(String.valueOf(d.getTime())+ "분");
-                	   			break;
+                	   			serverUI.primary.pcPanel.lblPC[ct.pos][0].setText(String.valueOf(d.getTime() + "분"));
+                	   			break;// 클라이언트로 메세지를 전달 후에 서버 쪽의 좌석 배치의 시간도 변경
                 	   		}
             		}
             		serverUI.primary.resetTXT();
@@ -109,12 +109,12 @@ public class ServerController{
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
             		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
             		UserData d = userDAO.getUser(serverUI.primary.txtInfo[0].getText());
-            		if(d.getFlag()) {
+            		if(d.getFlag()) {//만약 현재 로그인 중인 회원이면 즉각적으로 클라이언트 쪽도 시간을 갱신하기 위해서
             			for(Threads ct : ChatThreads)
-                	   		if(ct.id.equals(d.getId())) {// 선택한 회원을 종료 시킬 때
+                	   		if(ct.id.equals(d.getId())) {
                 	   			ct.outMsg.println(gson.toJson(new Message("changTime", d.getId(),"","","",d.getTime(),"")));
                 	   			serverUI.primary.pcPanel.lblPC[ct.pos][0].setText(String.valueOf(d.getTime() + "분"));
-                	   			break;
+                	   			break;// 클라이언트로 메세지를 전달 후에 서버 쪽의 좌석 배치의 시간도 변경
                 	   		}
             		}
             		serverUI.primary.resetTXT();
