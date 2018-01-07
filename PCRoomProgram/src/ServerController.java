@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -8,11 +9,13 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Logger;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.AncestorListener;
+
 import com.google.gson.Gson;
 
 public class ServerController{
@@ -251,7 +254,7 @@ public class ServerController{
                               loginStatus = true; // 로그인했으므로  메세지를 주고 받을 수 있게 준비
                               pos = seat;// 해당 스레드의 좌석 정보를 저장
                               serverUI.primary.pcPanel.btnPC[seat].setBackground(Color.CYAN);
-                              serverUI.primary.pcPanel.lblPC[seat][0].setText(String.valueOf(m.getTime()));
+                              serverUI.primary.pcPanel.lblPC[seat][0].setText(String.valueOf(m.getTime()) + "분");
                               serverUI.primary.pcPanel.lblPC[seat++][1].setText(m.getId());
                               
                               loginUser.add(id);
@@ -332,7 +335,7 @@ public class ServerController{
                   serverUI.primary.combo.setModel(new DefaultComboBoxModel(loginUser));
                   // 콤보 박스에 로그아웃한 회원의 정보를 삭제
                }else if(m.getType().equals("time")) {
-            	   serverUI.primary.pcPanel.lblPC[pos][0].setText(String.valueOf(m.getTime()));// 클라이언트에서 1분 마다 넘어오는 정보를 갱신
+            	   serverUI.primary.pcPanel.lblPC[pos][0].setText(String.valueOf(m.getTime()) + "분");// 클라이언트에서 1분 마다 넘어오는 정보를 갱신
             	   userDAO.updateTime(m.getId(), m.getTime());// 1분 마다 즉각적으로 데이터베이스의 시간을 갱신
             	   serverUI.primary.memberPanel.updateTime(userDAO.getUser(m.getId()));// 서버 회원 관리 창의 테이블을 갱신
                }
