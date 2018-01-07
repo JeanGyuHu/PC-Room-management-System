@@ -10,7 +10,7 @@ public class UserDAO {
 	private String jdbcUrl = "jdbc:mysql://localhost/pcManagement";	//데이터가 저장되는 주소
 	private String jdbcDriver = "com.mysql.jdbc.Driver";
 	private String strName  = "root";			//DB아이디
-	private String strPassword = "0517";		//DB비밀번호
+	private String strPassword = "123123";		//DB비밀번호
 	
 	private String sql;		//sql문
 	private int result;		//각각의 메소드가 동작했는지 안했는지에 대해서 알아내기 위함
@@ -113,7 +113,7 @@ public class UserDAO {
 		closeDB();
 		
 		if(data != null)
-		return data;
+			return data;
 		else
 			return null;
 	}

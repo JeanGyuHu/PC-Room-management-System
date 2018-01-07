@@ -92,6 +92,15 @@ public class ServerController{
             		userDAO.updateTime(serverUI.primary.txtInfo[0].getText(),
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
             		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
+            		UserData d = userDAO.getUser(serverUI.primary.txtInfo[0].getText());
+            		if(d.getFlag()) {
+            			for(Threads ct : ChatThreads)
+                	   		if(ct.id.equals(d.getId())) {// 선택한 회원을 종료 시킬 때
+                	   			ct.outMsg.println(gson.toJson(new Message("changTime", d.getId(),"","","",d.getTime(),"")));
+                	   			serverUI.primary.pcPanel.lblPC[ct.pos][0].setText(String.valueOf(d.getTime())+ "분");
+                	   			break;
+                	   		}
+            		}
             		serverUI.primary.resetTXT();
             		//시간충전 후에 테이블의 정보를 최신화
             	} else if(obj == serverUI.primary.btnModify) { //TODO:사용자 정보 수정 
@@ -99,6 +108,15 @@ public class ServerController{
             			   serverUI.primary.txtInfo[2].getText(),
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
             		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
+            		UserData d = userDAO.getUser(serverUI.primary.txtInfo[0].getText());
+            		if(d.getFlag()) {
+            			for(Threads ct : ChatThreads)
+                	   		if(ct.id.equals(d.getId())) {// 선택한 회원을 종료 시킬 때
+                	   			ct.outMsg.println(gson.toJson(new Message("changTime", d.getId(),"","","",d.getTime(),"")));
+                	   			serverUI.primary.pcPanel.lblPC[ct.pos][0].setText(String.valueOf(d.getTime() + "분"));
+                	   			break;
+                	   		}
+            		}
             		serverUI.primary.resetTXT();
             	   // 정보를 수정 후에도 테이블의 정보를 최신화
                } else if(obj == serverUI.primary.btnDelete){ //TODO:사용자 삭제
@@ -107,7 +125,11 @@ public class ServerController{
             	   	serverUI.primary.resetTXT();
             	   // 회원 삭제 후에도 바로바로 테이블을 새로 갱신
                } else if(obj == serverUI.primary.btnPowerOff) { //TODO:사용자에게 접속종료 창 띄움
-            	   	msgSendAll("warning");
+            	   	for(Threads ct : ChatThreads)
+            	   		if(ct.id.equals(serverUI.primary.txtInfo[0].getText())) {// 선택한 회원을 종료 시킬 때
+            	   			ct.outMsg.println(gson.toJson(new Message("warning", "","","","",0,"")));
+            	   			break;
+            	   		}
             	   	userDAO.updateFlag(serverUI.primary.txtInfo[0].getText(), false);
                } else if(obj == serverUI.primary.txtMessage) {
             	   	msgSendAll(serverUI.primary.txtMessage.getText());
@@ -199,12 +221,7 @@ public class ServerController{
 
     	  if(msg.equals("exit")) {//서버가 종료되는 경우
     		  ct.outMsg.println(gson.toJson(new Message("exit", "","","","",0,"")));
-          }else if(msg.equals("warning") && ct.id.equals(serverUI.primary.txtInfo[0].getText())) {// 선택한 회원을 종료 시킬 때
-        	  System.out.println(serverUI.primary.txtInfo[0].getText());
-        	  ct.outMsg.println(gson.toJson(new Message("warning", "","","","",0,"")));
-        	  break;
-          }
-    	  else if(serverUI.primary.combo.getSelectedItem().equals("전체"))// 현재 접속중인 모든 클라이언트에게 메세지를 보냄
+          }else if(serverUI.primary.combo.getSelectedItem().equals("전체"))// 현재 접속중인 모든 클라이언트에게 메세지를 보냄
     		  ct.outMsg.println(gson.toJson(new Message("message", "","","","",0,msg)));
     	  else if(serverUI.primary.combo.getSelectedItem().equals(ct.id)) {// combobox를 통해 선택한 클라이언트에게만 메세지를 보낼 때
     		  ct.outMsg.println(gson.toJson(new Message("message", "","","","",0,msg)));
@@ -219,7 +236,7 @@ public class ServerController{
       private UserData d;
       
       protected String id;// 현재 로그인한 클라이언트의 아이디어를 저장하기 위해서
-      private int pos;
+      protected int pos;
       private BufferedReader inMsg = null;
       private PrintWriter outMsg = null;
       private boolean loginStatus = false;

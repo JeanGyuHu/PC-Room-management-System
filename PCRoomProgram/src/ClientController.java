@@ -84,6 +84,10 @@ public class ClientController implements Runnable {
     			  loginFlag = false;
                   chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
                   ui.changStart();
+    		  }else if(m.getType().equals("changTime")){
+    			  num = m.getTime();
+    			  System.out.println("chag");
+    			  userStatus.LoginUser(m.getId(), String.valueOf(m.getTime()));
     		  }else {
     			  System.out.println(m.getType());
     			  chatWindow.msgOut.append("안 사장님  >> " + m.getMessage() + "\n");// txtArea에 읽어온 메세지를 사용자에게 표시
