@@ -44,76 +44,75 @@ public class ServerController{
          
          // dataHandle.addObj(primary.topPanel);
          // PrimaryPanel 버튼 구현
-         serverUI.primary.addButtonActionListener(new ActionListener() {
+	   
+	   serverUI.primary.addButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                // TODO Auto-generated method stub
-               Object obj = e.getSource();
+            	Object obj = e.getSource();
 
-               if(obj == serverUI.primary.btnMember) { // 전체 사용자들의 정보
-                  serverUI.primary.rightPanel.setVisible(true);
-                  serverUI.primary.modifyPanel.setVisible(true);
-                  serverUI.primary.showInformationPanel.setVisible(false);
-                  serverUI.primary.messagePanel.setVisible(false);
-                  serverUI.primary.memberPanel.setVisible(true);
-                  serverUI.primary.pcPanel.setVisible(false);
+            	if(obj == serverUI.primary.btnMember) { // 전체 사용자들의 정보
+            		serverUI.primary.rightPanel.setVisible(true);
+            		serverUI.primary.modifyPanel.setVisible(true);
+            		serverUI.primary.showInformationPanel.setVisible(false);
+            		serverUI.primary.messagePanel.setVisible(false);
+            		serverUI.primary.memberPanel.setVisible(true);
+            		serverUI.primary.pcPanel.setVisible(false);
                   
-               } else if(obj == serverUI.primary.btnSeat) { // 사용자 접속 정보
-                  serverUI.primary.rightPanel.setVisible(true);
-                  serverUI.primary.modifyPanel.setVisible(false);
-                  serverUI.primary.showInformationPanel.setVisible(true);
-                  serverUI.primary.messagePanel.setVisible(false);
-                  serverUI.primary.memberPanel.setVisible(false);
-                  serverUI.primary.pcPanel.setVisible(true);
+            	} else if(obj == serverUI.primary.btnSeat) { // 사용자 접속 정보
+            		serverUI.primary.rightPanel.setVisible(true);
+            		serverUI.primary.modifyPanel.setVisible(false);
+            		serverUI.primary.showInformationPanel.setVisible(true);
+            		serverUI.primary.messagePanel.setVisible(false);
+            		serverUI.primary.memberPanel.setVisible(false);
+            		serverUI.primary.pcPanel.setVisible(true);
                   
-               } else if(obj == serverUI.primary.btnMessage) { // 메시지
-                  serverUI.primary.rightPanel.setVisible(false);
-                  serverUI.primary.modifyPanel.setVisible(false);
-                  serverUI.primary.showInformationPanel.setVisible(false);
-                  serverUI.primary.messagePanel.setVisible(true);
+            	} else if(obj == serverUI.primary.btnMessage) { // 메시지
+            		serverUI.primary.rightPanel.setVisible(false);
+            		serverUI.primary.modifyPanel.setVisible(false);
+            		serverUI.primary.showInformationPanel.setVisible(false);
+            		serverUI.primary.messagePanel.setVisible(true);
                   
-               } else if(obj == serverUI.primary.btnLogout) { // 서버 창을 종료
+            	} else if(obj == serverUI.primary.btnLogout) { // 서버 창을 종료
                   
-                  int result = JOptionPane.showConfirmDialog(serverUI.primary.topPanel, "종료하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
+            		int result = JOptionPane.showConfirmDialog(serverUI.primary.topPanel, "종료하시겠습니까?","알림",JOptionPane.YES_NO_OPTION);
                   
-                  if(result == JOptionPane.YES_OPTION) {
-                	  msgSendAll("exit");//클라이언트들을 다 로그아웃 시키고
-                	  for(String user : loginUser) {
-                		  if(!user.equals("전체"))
-                			  userDAO.updateFlag(user, false);// 로그인되어있는 회원의 로그인 플래그를 수정
-                	  }
-                	  System.exit(1);
-                  }else if( result == JOptionPane.NO_OPTION) {
-                     
-                  }
-               } else if(obj == serverUI.primary.btnCharge) { //TODO:시간충전   
-            	   userDAO.updateTime(serverUI.primary.txtInfo[0].getText(),
+            		if(result == JOptionPane.YES_OPTION) {
+            			msgSendAll("exit");//클라이언트들을 다 로그아웃 시키고
+            			for(String user : loginUser) {
+            				if(!user.equals("전체"))
+            					userDAO.updateFlag(user, false);// 로그인되어있는 회원의 로그인 플래그를 수정
+            			}
+            			System.exit(1);
+            		}else if( result == JOptionPane.NO_OPTION) {}
+            	} else if(obj == serverUI.primary.btnCharge) { //TODO:시간충전   
+            		userDAO.updateTime(serverUI.primary.txtInfo[0].getText(),
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
-            	   /*userDAO.updateUser(serverUI.primary.txtInfo[0].getText(),
-            			   serverUI.primary.txtInfo[2].getText(),
-            			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));*/
-            	   serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
-            	   //시간충전 후에 테이블의 정보를 최신화
+            		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
+            		serverUI.primary.resetTXT();
+            		//시간충전 후에 테이블의 정보를 최신화
             	} else if(obj == serverUI.primary.btnModify) { //TODO:사용자 정보 수정 
-            	   userDAO.updateUser(serverUI.primary.txtInfo[0].getText(),
+            		userDAO.updateUser(serverUI.primary.txtInfo[0].getText(),
             			   serverUI.primary.txtInfo[2].getText(),
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
-            	   serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
+            		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
+            		serverUI.primary.resetTXT();
             	   // 정보를 수정 후에도 테이블의 정보를 최신화
                } else if(obj == serverUI.primary.btnDelete){ //TODO:사용자 삭제
-            	   userDAO.delUser(serverUI.primary.txtInfo[0].getText());
-            	   serverUI.primary.memberPanel.updateTable(null);
+            	   	userDAO.delUser(serverUI.primary.txtInfo[0].getText());
+            	   	serverUI.primary.memberPanel.updateTable(null);
+            	   	serverUI.primary.resetTXT();
             	   // 회원 삭제 후에도 바로바로 테이블을 새로 갱신
                } else if(obj == serverUI.primary.btnPowerOff) { //TODO:사용자에게 접속종료 창 띄움
-            	   msgSendAll("warning");
-            	   userDAO.updateFlag(serverUI.primary.txtInfo[0].getText(), false);
+            	   	msgSendAll("warning");
+            	   	userDAO.updateFlag(serverUI.primary.txtInfo[0].getText(), false);
                } else if(obj == serverUI.primary.txtMessage) {
-            	   msgSendAll(serverUI.primary.txtMessage.getText());
-            	   serverUI.primary.taMessage.append("안 사장  >> "+serverUI.primary.combo.getSelectedItem()+" : "
+            	   	msgSendAll(serverUI.primary.txtMessage.getText());
+            	   	serverUI.primary.taMessage.append("안 사장  >> "+serverUI.primary.combo.getSelectedItem()+" : "
             		   + serverUI.primary.txtMessage.getText() + "\n");
             	   		
-            	   serverUI.primary.txtMessage.setText("");
-            	   serverUI.primary.taMessage.setCaretPosition(serverUI.primary.taMessage.getDocument().getLength());
+            	   	serverUI.primary.txtMessage.setText("");
+            	   	serverUI.primary.taMessage.setCaretPosition(serverUI.primary.taMessage.getDocument().getLength());
             	  
                }
                
@@ -252,7 +251,7 @@ public class ServerController{
                               loginStatus = true; // 로그인했으므로  메세지를 주고 받을 수 있게 준비
                               pos = seat;// 해당 스레드의 좌석 정보를 저장
                               serverUI.primary.pcPanel.btnPC[seat].setBackground(Color.CYAN);
-                              //serverUI.primary.pcPanel.lblPC[seat++][0].setText(m.getTime());
+                              serverUI.primary.pcPanel.lblPC[seat][0].setText(String.valueOf(m.getTime()));
                               serverUI.primary.pcPanel.lblPC[seat++][1].setText(m.getId());
                               
                               loginUser.add(id);
@@ -320,6 +319,7 @@ public class ServerController{
                else if(m.getType().equals("logout")) {// 클라이언트 쪽에서 로그아웃을 한 경우
                   seat--;// 좌석 수를 하나 감소 
                   serverUI.primary.pcPanel.btnPC[pos].setBackground(Color.white);
+                  serverUI.primary.pcPanel.lblPC[pos][0].setText("x");
                   serverUI.primary.pcPanel.lblPC[pos][1].setText("");
                   // 해당 클라이언트의 좌석의 정보를 변경
                   
@@ -331,7 +331,11 @@ public class ServerController{
                   loginUser.remove(id);
                   serverUI.primary.combo.setModel(new DefaultComboBoxModel(loginUser));
                   // 콤보 박스에 로그아웃한 회원의 정보를 삭제
-               }       
+               }else if(m.getType().equals("time")) {
+            	   serverUI.primary.pcPanel.lblPC[pos][0].setText(String.valueOf(m.getTime()));// 클라이언트에서 1분 마다 넘어오는 정보를 갱신
+            	   userDAO.updateTime(m.getId(), m.getTime());// 1분 마다 즉각적으로 데이터베이스의 시간을 갱신
+            	   serverUI.primary.memberPanel.updateTime(userDAO.getUser(m.getId()));// 서버 회원 관리 창의 테이블을 갱신
+               }
             } // while()
          } catch (IOException e1) {
             // TODO Auto-generated catch block

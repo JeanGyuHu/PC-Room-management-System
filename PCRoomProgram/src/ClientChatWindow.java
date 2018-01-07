@@ -4,20 +4,21 @@ import javax.swing.*;
 
 public class ClientChatWindow extends JDialog {
 
-	private JPanel bottomPanel; // 메시지입력과 종료버튼을 띄울 패널
-	protected JTextArea msgOut; // 채팅되는 전체 메시지들을 띄울 객체
-	protected JTextField msgInput; // 클라이언트가 메시지를 입력할 텍스트 필드
-	protected JButton btnExit; // 메시지 창을 종료하는 버튼
-	private JScrollPane scroll; // 채팅메시지 부분의 스크롤
+	private JPanel bottomPanel; // 메시지입력필드와 종료버튼이 들어갈 패널
+	protected JTextArea msgOut; // 주고받은 메시지가 뜨는 창
+	protected JTextField msgInput; // 사용자가 채팅을 입력할 텍스트 필드 
+	protected JButton btnExit; // 메시지창 종료 버튼
+	private JScrollPane scroll; // 메시지 창에 들어갈 스크롤바
 	
 	public ClientChatWindow(){
 		ClientAppManager.getAppManager().setClientChatWindow(this);
-		setTitle("메시지"); // 창 제목을 '메시지'로 설정
-		setResizable(false); // 크기 조정 불가
+		setTitle("메시지");
+		setResizable(false);
 		setLayout(new BorderLayout());
 		setSize(400, 400);
 		msgOut = new JTextArea("",18,30);
 		msgOut.setEditable(false);
+		
 		scroll = new JScrollPane(msgOut, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		add(scroll, BorderLayout.PAGE_START);
 		
@@ -37,7 +38,7 @@ public class ClientChatWindow extends JDialog {
 		add(bottomPanel);
 	}
 	
-	// 나가기 버튼과 메시지 입력버튼에 대한 이벤트 리스너 // View 와 Controller 분리
+	// 종료 버튼과 메시지 입력 텍스트 필드의 이벤트 리스너 처리를 위한 함수  // View 와 Controller 분리
 	public void addTOAcListener(ActionListener listener) {
 		btnExit.addActionListener(listener);
 		msgInput.addActionListener(listener);

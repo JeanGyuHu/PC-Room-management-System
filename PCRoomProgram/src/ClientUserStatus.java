@@ -60,7 +60,7 @@ public class ClientUserStatus extends JPanel {
 	// 로그인한 사용자의 아이디와 남은 시간을 텍스트 필드에 뿌려주는 함수
 	public void LoginUser(String userName, String remainTime) {
 		txtUserId.setText(userName);
-		txtUserRemainTime.setText(remainTime);
+		txtUserRemainTime.setText(remainTime + " 분");
 	}
 	
 	// 로그아웃시, 확인 창을 띄워 확인을 누르면 true값을 반환
@@ -73,6 +73,7 @@ public class ClientUserStatus extends JPanel {
 			return false;
 		}
 	}
+	
 	
 	// 아이디와 남은 시간의 텍스트 필드, 메시지, 로그아웃 버튼에 대한 이벤트 리스너 처리 // View 와 Controller 분리
 	public void addTOAcListener(ActionListener listener) {

@@ -5,26 +5,18 @@ import java.awt.event.*;
 public class PrimaryPanel extends JPanel {
 
    protected JPanel topPanel,leftPanel,rightPanel,modifyPanel,showInformationPanel,messagePanel;
-   // topPanel : 사용자 관리, 좌석배치, 메시지, 종료버튼을 띄울 패널
-   // leftPanel, : 사용자 정보를 띄울 PcmemberPanel과 좌석을 띄울 PCPanel을 띄울 왼쪽 패널
-   // rightPanel : 사용자의 정보를 띄울 오른쪽 패널
-   // modifyPanel : 시간 충전, 수정, 사용자 탈퇴 버튼이 있는 패널
-   // showInformationPanel : 사용종료 버튼이 있는 패널
-   // messagePanel : 메시지를 띄울 패널
    protected JButton btnMember,btnSeat, btnMessage, btnLogout;
-   //순서대로 사용자 관리, 좌석배치, 메시지, 종료 버튼
-   private ImageIcon[] image; // 각 사용자 관리, 좌석배치, 메시지, 종료 버튼들의 이미지
+   private ImageIcon[] image;
    protected JLabel lblId,lblName,lblPassword,lblBirth,lblTime;
-   // 선택한 사용자의 ID, 이름, 비밀번호, 생일, 남은 시간 글귀를 띄울 라벨
-   protected JTextField[] txtInfo; // 선택한 사용자의 ID, 이름, 비밀번호, 생일, 남은 시간을 띄울 텍스트 필드
+   protected JTextField[] txtInfo;
    protected JButton btnModify,btnDelete,btnCharge,btnPowerOff;
-   // 수정, 탈퇴, 시간 충전, 사용 종료 버튼
-   private Font fnt; // 폰트 값
-   protected JTextField txtMessage; // 메시지를 입력할 텍스트 필드
-   protected JTextArea taMessage; // 전체 채팅 메시지를 띄울 창
-   protected JScrollPane scroll; // 메시지 창에 띄울 스크롤
-   protected JComboBox combo; // 1:1메시지를 위해 사용자의 id를 선택하는 콤보박스
+   private Font fnt;
+   protected JTextField txtMessage;
+   protected JTextArea taMessage;
+   protected JScrollPane scroll;
    protected PcMemberPanel memberPanel;
+   protected JComboBox combo;
+   
    protected PCPanel pcPanel;
 
    public PrimaryPanel(){
@@ -98,13 +90,14 @@ public class PrimaryPanel extends JPanel {
       
       combo = new JComboBox();
       
+      
       messagePanel.add(scroll,BorderLayout.PAGE_START);
       messagePanel.add(txtMessage,BorderLayout.EAST);
       messagePanel.add(combo,BorderLayout.CENTER);
       
       txtInfo = new JTextField[5];
       
-      for(int i =0;i<5;i++) { // 텍스트 필드가 각각 사용자의 ID, 이름, 비밀번호, 생일, 남은 시간
+      for(int i =0;i<5;i++) {
          txtInfo[i] = new JTextField(10);
          txtInfo[i].setBounds(150,50+50*i,140,30);
          rightPanel.add(txtInfo[i]);
@@ -151,10 +144,11 @@ public class PrimaryPanel extends JPanel {
       leftPanel.add(memberPanel);
       
       pcPanel = new PCPanel();
-      pcPanel.setVisible(true); // 기본 초기화면을 PCPanel로 설정
+      pcPanel.setVisible(true);
       leftPanel.add(pcPanel);
       
       image = new ImageIcon[4];
+      
       image[0] = new ImageIcon("Images/사용자 설정.png");
       image[1] = new ImageIcon("Images/PC 관리.png");
       image[2] = new ImageIcon("Images/메세지.png");
@@ -185,17 +179,22 @@ public class PrimaryPanel extends JPanel {
       topPanel.add(btnLogout);      
    }
    
-// 이벤트 리스너 처리 // View 와 Controller 분리
+   public void resetTXT() {
+	   for(int i =0;i<5;i++) 
+	         txtInfo[i].setText("");;
+	      
+   }
+   
    public void addButtonActionListener(ActionListener listener) {
-      btnMember.addActionListener(listener); // 사용자 관리 버튼
-      btnSeat.addActionListener(listener); // 좌석 관리 버튼
-      btnMessage.addActionListener(listener); // 메시지 선택 버튼
-      btnLogout.addActionListener(listener); // 서버의 사용 종료 버튼
-      btnCharge.addActionListener(listener); // 클라이언트 시간 충전 버튼
-      btnDelete.addActionListener(listener); // 클라이언트 탈퇴 버튼
-      btnModify.addActionListener(listener); // 클라이언트 정보 수정 버튼
-      btnPowerOff.addActionListener(listener); // 클라이언트의 사용 종료 버튼
-      txtMessage.addActionListener(listener); // 보낼 메시지의 텍스트 필드
+      btnMember.addActionListener(listener);
+      btnSeat.addActionListener(listener);
+      btnMessage.addActionListener(listener);
+      btnLogout.addActionListener(listener);
+      btnCharge.addActionListener(listener);
+      btnDelete.addActionListener(listener);
+      btnModify.addActionListener(listener);
+      btnPowerOff.addActionListener(listener);
+      txtMessage.addActionListener(listener);
       
    }
    
