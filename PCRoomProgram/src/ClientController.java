@@ -81,7 +81,7 @@ public class ClientController implements Runnable {
     			  System.out.println("로그아웃");
     			  warning.show();
     		  }else if(m.getType().equals("updateTime")){
-    			  userStatus.txtUserRemainTime.setText(Integer.toString(m.getTime()));
+    			  userStatus.txtUserRemainTime.setText(String.valueOf(m.getTime()));
     		  }else if(m.getType().equals("exit")) {
     			  loginFlag = false;
                   chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화
