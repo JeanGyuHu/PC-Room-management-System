@@ -78,8 +78,10 @@ public class ClientController implements Runnable {
     		  msg = inMsg.readLine();// 서버로부터 메세지를 읽어온 후에 
     		  m = gson.fromJson(msg, Message.class);// Gson으로 메세지를 파싱
     		  if(m.getType().equals("warning")) {//만약 넘어온 메세지의 타입이 warning인 경우에 사용종료하라는 창을 띄워줌
-    			  System.out.println("오그아웃");
+    			  System.out.println("로그아웃");
     			  warning.show();
+    		  }else if(m.getType().equals("updateTime")){
+    			  userStatus.txtUserRemainTime.setText(Integer.toString(m.getTime()));
     		  }else if(m.getType().equals("exit")) {
     			  loginFlag = false;
                   chatWindow.msgOut.setText("");// 여태까지의 메세지 내용을 초기화

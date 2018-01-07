@@ -90,6 +90,7 @@ public class ServerController{
             			   Integer.parseInt(serverUI.primary.txtInfo[4].getText()));
             		serverUI.primary.memberPanel.updateTable(userDAO.getUser(serverUI.primary.txtInfo[0].getText()));
             		serverUI.primary.resetTXT();
+            		outMsg.println(gson.toJson(new Message("updateTime","","","","",0,"")));
             		//시간충전 후에 테이블의 정보를 최신화
             	} else if(obj == serverUI.primary.btnModify) { //TODO:사용자 정보 수정 
             		userDAO.updateUser(serverUI.primary.txtInfo[0].getText(),
